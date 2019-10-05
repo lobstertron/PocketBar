@@ -1,5 +1,7 @@
 package com.core.cocktail;
 
+import com.core.database.Ingredient;
+
 import java.util.ArrayList;
 import java.util.List;
 
