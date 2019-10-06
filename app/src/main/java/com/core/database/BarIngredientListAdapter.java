@@ -12,12 +12,14 @@ import com.core.android.pocketbar.R;
 
 import java.util.List;
 
-public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder> {
+public class BarIngredientListAdapter extends RecyclerView.Adapter<BarIngredientListAdapter.IngredientViewHolder> {
 
     private final LayoutInflater mInflater;
-    private List<Ingredient> mIngredients; // Cached copy of words
+    private List<BarIngredient> mIngredients; //Cached copy of ingredients
 
-    public IngredientListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public BarIngredientListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+    }
 
     @Override
     public IngredientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,21 +30,19 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     @Override
     public void onBindViewHolder(IngredientViewHolder holder, int position) {
         if (mIngredients != null) {
-            Ingredient current = mIngredients.get(position);
-            holder.wordItemView.setText(current.getName());
+            BarIngredient current = mIngredients.get(position);
+            holder.ingredientItemView.setText(current.getIngredient());
         } else {
             // Covers the case of data not being ready yet.
-            holder.wordItemView.setText("No Ingredient");
+            holder.ingredientItemView.setText("No Ingredient");
         }
     }
 
-    public void setIngredients(List<Ingredient> words){
+    public void setIngredients(List<BarIngredient> words) {
         mIngredients = words;
         notifyDataSetChanged();
     }
 
-    // getItemCount() is called many times, and when it is first called,
-    // mIngredients has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         if (mIngredients != null)
@@ -51,11 +51,11 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     }
 
     class IngredientViewHolder extends RecyclerView.ViewHolder {
-        private final TextView wordItemView;
+        private final TextView ingredientItemView;
 
         private IngredientViewHolder(View itemView) {
             super(itemView);
-            wordItemView = itemView.findViewById(R.id.textView);
+            ingredientItemView = itemView.findViewById(R.id.textView);
         }
     }
 }

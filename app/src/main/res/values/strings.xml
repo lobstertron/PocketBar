@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PocketBar</string>
-    <string name="title_activity_bar">BarActivity</string>
-    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_bar">My Bar</string>
+    <string name="title_activity_search">Search Cocktails</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

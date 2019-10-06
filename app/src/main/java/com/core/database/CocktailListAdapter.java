@@ -41,8 +41,6 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
         notifyDataSetChanged();
     }
 
-    // getItemCount() is called many times, and when it is first called,
-    // mCocktails has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         if (mCocktails != null)

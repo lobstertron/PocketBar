@@ -2,37 +2,26 @@ package com.core.android.pocketbar;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
-import com.core.database.Cocktail;
-import com.core.database.CocktailRepository;
-import com.core.database.CocktailViewModel;
-import com.core.database.Cocktail;
-import com.core.database.CocktailListAdapter;
-import com.core.database.CocktailViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-import android.widget.EditText;
+import com.core.database.Cocktail;
+import com.core.database.CocktailListAdapter;
+import com.core.database.PocketBarRepository;
 
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
     private EditText mSearchCocktailsEntry;
-    private String mCocktailSearch;
-
-    private CocktailViewModel mCocktailViewModel;
     private CocktailListAdapter mCocktailListAdapter;
     private RecyclerView mRecyclerView;
+    private PocketBarRepository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,34 +35,36 @@ public class SearchActivity extends AppCompatActivity {
         mCocktailListAdapter = new CocktailListAdapter(this);
         mRecyclerView.setAdapter(mCocktailListAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        mCocktailViewModel = ViewModelProviders.of(this).get(CocktailViewModel.class);
         mSearchCocktailsEntry = findViewById(R.id.search_cocktails);
+        mRepository = new PocketBarRepository(getApplication());
     }
 
+    /**
+     * Searches for cocktails that can be created with a list of entered ingredients
+     */
     public void searchCocktails(View view) {
-        mCocktailSearch = mSearchCocktailsEntry.getText().toString();
-        String[] ingredientList = mCocktailSearch.split(",");
-        new searchAsyncTask(mCocktailViewModel, mCocktailListAdapter).execute(ingredientList);
+        String searchString = mSearchCocktailsEntry.getText().toString();
+        String[] ingredientList = searchString.split(",");
+        new searchAsyncTask(mRepository, mCocktailListAdapter).execute(ingredientList);
     }
 
+    /**
+     * Runs the cocktail search asynchronously in a background thread, updating the contents of
+     * the cocktail adapter once complete
+     */
     private static class searchAsyncTask extends AsyncTask<String, Void, List<Cocktail>> {
 
-        private CocktailViewModel cocktailViewModel;
+        private PocketBarRepository cocktailRepository;
         private CocktailListAdapter cocktailListAdapter;
 
-        searchAsyncTask(CocktailViewModel cvm, CocktailListAdapter adapter) {
-            cocktailViewModel = cvm;
+        searchAsyncTask(PocketBarRepository cr, CocktailListAdapter adapter) {
+            cocktailRepository = cr;
             cocktailListAdapter = adapter;
         }
 
-        /**
-         * Runs on the background thread.
-         */
         @Override
         protected List<Cocktail> doInBackground(String... ingredients) {
-            // Return a String result.
-            return cocktailViewModel.searchCocktails(ingredients);
+            return cocktailRepository.searchCocktails(ingredients);
         }
 
         /**

@@ -3,21 +3,43 @@ package com.core.database;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CocktailRepository {
+/**
+ * Provides access to database information without requiring a data source that is set in stone
+ */
+public class PocketBarRepository {
+    //The DAO interface providing the methods to query the Room DB
     private PocketBarDao mPocketBarDao;
 
-    CocktailRepository(Application application) {
+    public PocketBarRepository(Application application) {
         PocketBarRoomDatabase db = PocketBarRoomDatabase.getDatabase(application);
         mPocketBarDao = db.pocketbarDao();
     }
 
-    List<Cocktail> getAllCocktails() {
+    /************************** Cocktail methods and Objects **************************************/
+    public void insertCocktail(Cocktail cocktail) {
+        new PocketBarRepository.insertCocktailAsyncTask(mPocketBarDao).execute(cocktail);
+    }
+
+    private static class insertCocktailAsyncTask extends AsyncTask<Cocktail, Void, Void> {
+
+        private PocketBarDao mAsyncTaskDao;
+
+        insertCocktailAsyncTask(PocketBarDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Cocktail... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    public List<Cocktail> getAllCocktails() {
         return mPocketBarDao.getAllCocktails();
     }
 
@@ -33,7 +55,7 @@ public class CocktailRepository {
                 String ingredient = allCocktailLines.get(j).getIngredient();
                 //If a cocktail uses an ingredient not in the list of ingredients, do not add to result
                 boolean ingredientInSearch = Arrays.asList(ingredients).contains(ingredient);
-                if ( !ingredientInSearch ) {
+                if (!ingredientInSearch) {
                     validCocktail = false;
                     break;
                 }
@@ -45,24 +67,27 @@ public class CocktailRepository {
         return cocktailResult;
     }
 
-    public void insert (Cocktail word) {
-        new insertAsyncTask(mPocketBarDao).execute(word);
+    /************************** Bar ingredient methods and objects ********************************/
+    public List<BarIngredient> getMyBarIngredients() {
+        return mPocketBarDao.getMyBarIngredients();
     }
 
-    private static class insertAsyncTask extends AsyncTask<Cocktail, Void, Void> {
+    public void insertBarIngredient(BarIngredient barIngredient) {
+        new PocketBarRepository.insertBarIngredientAsyncTask(mPocketBarDao).execute(barIngredient);
+    }
+
+    private static class insertBarIngredientAsyncTask extends AsyncTask<BarIngredient, Void, Void> {
 
         private PocketBarDao mAsyncTaskDao;
 
-        insertAsyncTask(PocketBarDao dao) {
+        insertBarIngredientAsyncTask(PocketBarDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
-        protected Void doInBackground(final Cocktail... params) {
+        protected Void doInBackground(final BarIngredient... params) {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
     }
-
-
 }

@@ -1,29 +1,31 @@
 package com.core.android.pocketbar;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.core.database.Ingredient;
-import com.core.database.IngredientListAdapter;
-import com.core.database.IngredientViewModel;
+import com.core.database.BarIngredient;
+import com.core.database.BarIngredientListAdapter;
+import com.core.database.PocketBarRepository;
 
 import java.util.List;
 
 public class BarActivity extends AppCompatActivity {
-
+    //Entry field for new ingredients being added to bar
     private EditText mAddIngredientEntry;
-    private String mIngredientToAdd;
 
-    private IngredientViewModel mIngredientViewModel;
+    //The view containing the list of ingredients in the bar
+    private RecyclerView mRecyclerView;
+    //The adapter holding the data backing the recyclerview
+    private BarIngredientListAdapter mBarIngredientListAdapter;
+    //The data access object providing access to the data stored in the application database
+    private PocketBarRepository mIngredientRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +35,72 @@ public class BarActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final IngredientListAdapter adapter = new IngredientListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        mIngredientViewModel = ViewModelProviders.of(this).get(IngredientViewModel.class);
-        mIngredientViewModel.getAllIngredients().observe(this, new Observer<List<Ingredient>>() {
-            @Override
-            public void onChanged(@Nullable final List<Ingredient> ingredients) {
-                // Update the cached copy of the words in the adapter.
-                System.out.println("Ingredients changed");
-                adapter.setIngredients(ingredients);
-            }
-        });
+        mRecyclerView = findViewById(R.id.recyclerview);
+        mBarIngredientListAdapter = new BarIngredientListAdapter(this);
+        mRecyclerView.setAdapter(mBarIngredientListAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAddIngredientEntry = findViewById(R.id.add_ingredient_entry);
+        mIngredientRepository = new PocketBarRepository(getApplication());
+        //Grab the contents of the main bar
+        getBarIngredients();
     }
 
     public void addIngredient(View view) {
-        mIngredientToAdd = mAddIngredientEntry.getText().toString();
-        mIngredientViewModel.insert(new Ingredient(mIngredientToAdd));
+        String ingredientToAdd = mAddIngredientEntry.getText().toString();
+        new insertBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(new BarIngredient(ingredientToAdd, "main_bar"));
+    }
+
+    public void getBarIngredients() {
+        new barAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute();
+    }
+
+
+    private static class insertBarIngredientAsyncTask extends AsyncTask<BarIngredient, Void, List<BarIngredient>> {
+
+        private PocketBarRepository ingredientRepository;
+        private BarIngredientListAdapter ingredientListAdapter;
+
+        insertBarIngredientAsyncTask(PocketBarRepository cr, BarIngredientListAdapter adapter) {
+            ingredientRepository = cr;
+            ingredientListAdapter = adapter;
+        }
+
+        @Override
+        protected List<BarIngredient> doInBackground(BarIngredient... barIngredients) {
+            // Return a String result.
+            ingredientRepository.insertBarIngredient(barIngredients[0]);
+            return ingredientRepository.getMyBarIngredients();
+        }
+
+        /**
+         * Update the cocktails in the adapter, which will update the view
+         */
+        protected void onPostExecute(List<BarIngredient> cocktails) {
+            new barAsyncTask(ingredientRepository, ingredientListAdapter).execute();
+        }
+    }
+
+    private static class barAsyncTask extends AsyncTask<Void, Void, List<BarIngredient>> {
+
+        private PocketBarRepository ingredientRepository;
+        private BarIngredientListAdapter ingredientListAdapter;
+
+        barAsyncTask(PocketBarRepository cr, BarIngredientListAdapter adapter) {
+            ingredientRepository = cr;
+            ingredientListAdapter = adapter;
+        }
+
+        @Override
+        protected List<BarIngredient> doInBackground(Void... voids) {
+            // Return a String result.
+            return ingredientRepository.getMyBarIngredients();
+        }
+
+        /**
+         * Update the cocktails in the adapter, which will update the view
+         */
+        protected void onPostExecute(List<BarIngredient> cocktails) {
+            ingredientListAdapter.setIngredients(cocktails);
+        }
     }
 }
