@@ -18,9 +18,13 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
 
+    //Entry field for entering cocktail search
     private EditText mSearchCocktailsEntry;
+    //The adapter that holds the cocktail data for the view
     private CocktailListAdapter mCocktailListAdapter;
+    //The view holding the cocktails
     private RecyclerView mRecyclerView;
+    //The repository providing database access
     private PocketBarRepository mRepository;
 
     @Override

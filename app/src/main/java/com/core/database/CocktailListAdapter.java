@@ -14,10 +14,19 @@ import java.util.List;
 
 public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapter.CocktailViewHolder> {
 
+    //Builds a cocktail view from a xml specification
     private final LayoutInflater mInflater;
-    private List<Cocktail> mCocktails; // Cached copy of words
+    private List<Cocktail> mCocktails; //Cocktails the adapter is managing
 
     public CocktailListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+
+    /**
+     *
+     */
+    public void setCocktails(List<Cocktail> cocktails) {
+        mCocktails = cocktails;
+        notifyDataSetChanged();
+    }
 
     @Override
     public CocktailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,16 +38,11 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
     public void onBindViewHolder(CocktailViewHolder holder, int position) {
         if (mCocktails != null) {
             Cocktail current = mCocktails.get(position);
-            holder.wordItemView.setText(current.getName());
+            holder.cocktailItemView.setText(current.getName());
         } else {
             // Covers the case of data not being ready yet.
-            holder.wordItemView.setText("No Cocktail");
+            holder.cocktailItemView.setText("No Cocktail");
         }
-    }
-
-    public void setCocktails(List<Cocktail> words){
-        mCocktails = words;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -49,11 +53,11 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
     }
 
     class CocktailViewHolder extends RecyclerView.ViewHolder {
-        private final TextView wordItemView;
+        private final TextView cocktailItemView;
 
         private CocktailViewHolder(View itemView) {
             super(itemView);
-            wordItemView = itemView.findViewById(R.id.textView);
+            cocktailItemView = itemView.findViewById(R.id.textView);
         }
     }
 }

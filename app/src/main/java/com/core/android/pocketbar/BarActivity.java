@@ -37,6 +37,8 @@ public class BarActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerview);
         mBarIngredientListAdapter = new BarIngredientListAdapter(this);
+        //Associate the adapter with the recyclerview - when the adapter's data changes it
+        //will inform the view that it needs to update
         mRecyclerView.setAdapter(mBarIngredientListAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAddIngredientEntry = findViewById(R.id.add_ingredient_entry);
@@ -45,16 +47,24 @@ public class BarActivity extends AppCompatActivity {
         getBarIngredients();
     }
 
+    /**
+     * Add an ingredient to the default bar and update view.
+     */
     public void addIngredient(View view) {
         String ingredientToAdd = mAddIngredientEntry.getText().toString();
         new insertBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(new BarIngredient(ingredientToAdd, "main_bar"));
     }
 
+    /**
+     * Get all ingredients in the default bar and update view.
+     */
     public void getBarIngredients() {
         new barAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute();
     }
 
-
+    /**
+     * Inserts a new ingredient into the default bar. Once inserted, updates the adapter
+     */
     private static class insertBarIngredientAsyncTask extends AsyncTask<BarIngredient, Void, List<BarIngredient>> {
 
         private PocketBarRepository ingredientRepository;
@@ -80,6 +90,9 @@ public class BarActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets the ingredients in the default bar and updates the view with those ingredients
+     */
     private static class barAsyncTask extends AsyncTask<Void, Void, List<BarIngredient>> {
 
         private PocketBarRepository ingredientRepository;
