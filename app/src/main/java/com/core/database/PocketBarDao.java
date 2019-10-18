@@ -47,6 +47,16 @@ public interface PocketBarDao {
     @Query("SELECT * from ingredient")
     List<Ingredient> getAllIngredients();
 
+    @Query("SELECT * from ingredient WHERE name IN(:names)")
+    List<Ingredient> getIngredientsWithNames(String[] names);
+
+    //The following two inverse methods are used in the cocktail search
+    @Query("SELECT cocktailId from cocktail_line WHERE ingredientId NOT IN(:ingredientIds) group by cocktailId")
+    List<Integer> getCocktailLinesWithIngredientIdsInverse(int[] ingredientIds);
+
+    @Query("SELECT * from cocktail WHERE id NOT IN(:cocktailIds)")
+    List<Cocktail> getCocktailsWithCocktailIds(Integer[] cocktailIds);
+
     @Query("SELECT * from bar_ingredient")
     List<BarIngredient> getAllBarIngredients();
 
@@ -61,9 +71,6 @@ public interface PocketBarDao {
 
     @Query("SELECT * FROM cocktail WHERE name IN(:names) order by name ASC")
     List<Cocktail> searchCocktails(String[] names);
-
-    @Query("SELECT * FROM cocktail_line WHERE cocktail = :name")
-    List<CocktailLine> searchCocktailLinesByCocktail(String name);
 
 
 }

@@ -1,47 +1,69 @@
 package com.core.database;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-@Entity(tableName = "cocktail_line", primaryKeys = {"ingredient","cocktail"})
+@Entity(tableName = "cocktail_line")
 public class CocktailLine {
 
-    @NonNull
-    @ColumnInfo(name = "ingredient")
-    private String ingredient;
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    private int id;
 
-    @NonNull
-    @ColumnInfo(name = "cocktail")
-    private String cocktail;
+    @ColumnInfo(name = "cocktailId")
+    private int cocktailId;
 
-    public CocktailLine(@NonNull String ingredient, @NonNull String cocktail, int amount, String amountLiteral) {
-        this.ingredient = ingredient;
-        this.cocktail = cocktail;
-        this.amount = amount;
-        this.amountLiteral = amountLiteral;
+    @ColumnInfo(name = "ingredientId")
+    private int ingredientId;
+
+    @ColumnInfo(name = "amount_literal")
+    private int amount_literal;
+
+    @ColumnInfo(name = "amount")
+    private double amount;
+
+    public int getId() {
+        return id;
     }
 
-    private int amount;
-    private String amountLiteral;
-
-
-    @NonNull
-    public String getIngredient() {
-        return ingredient;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @NonNull
-    public String getCocktail() {
-        return cocktail;
+    public int getCocktailId() {
+        return cocktailId;
     }
 
-    public int getAmount() {
+    public void setCocktailId(int cocktailId) {
+        this.cocktailId = cocktailId;
+    }
+
+    public int getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(int ingredientId) {
+        this.ingredientId = ingredientId;
+    }
+
+    public int getAmount_literal() {
+        return amount_literal;
+    }
+
+    public void setAmount_literal(int amount_literal) {
+        this.amount_literal = amount_literal;
+    }
+
+    public double getAmount() {
         return amount;
     }
 
-    public String getAmountLiteral() {
-        return amountLiteral;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
+
+
+
 
 }

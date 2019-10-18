@@ -3,8 +3,6 @@ package com.core.database;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -43,29 +41,27 @@ public class PocketBarRepository {
         return mPocketBarDao.getAllCocktails();
     }
 
+    //good sample string
     public List<Cocktail> searchCocktails(String... ingredients) {
-        //Look at every cocktail in the database
-        List<Cocktail> allCocktails = getAllCocktails();
-        //Save off those that satisfy criteria
-        List<Cocktail> cocktailResult = new LinkedList<>();
-        for (int i = 0; i < allCocktails.size(); i++) {
-            boolean validCocktail = true;
-            List<CocktailLine> allCocktailLines = mPocketBarDao.searchCocktailLinesByCocktail(allCocktails.get(i).getName());
-            for (int j = 0; j < allCocktailLines.size(); j++) {
-                String ingredient = allCocktailLines.get(j).getIngredient();
-                //If a cocktail uses an ingredient not in the list of ingredients, do not add to result
-                boolean ingredientInSearch = Arrays.asList(ingredients).contains(ingredient);
-                if (!ingredientInSearch) {
-                    validCocktail = false;
-                    break;
-                }
-            }
-            if (validCocktail) {
-                cocktailResult.add(allCocktails.get(i));
-            }
+
+        //Get all of the ingredients with the searched names
+        List<Ingredient> cocktailIngredients = mPocketBarDao.getIngredientsWithNames(ingredients);
+        int[] ingredientIds = new int[cocktailIngredients.size()];
+        for (int i = 0; i < ingredientIds.length; i++) {
+            int ingredientId = cocktailIngredients.get(i).getId();
+            ingredientIds[i] = ingredientId;
         }
-        return cocktailResult;
+
+        List<Integer> cocktailIdList = mPocketBarDao.getCocktailLinesWithIngredientIdsInverse(ingredientIds);
+        Integer[] cocktailIds = cocktailIdList.toArray(new Integer[cocktailIdList.size()]);
+
+        //Get every cocktail line that does not contain the ingredient
+        List<Cocktail> cocktails = mPocketBarDao.getCocktailsWithCocktailIds(cocktailIds);
+        return cocktails;
     }
+
+
+
 
     /************************** Bar ingredient methods and objects ********************************/
     public List<BarIngredient> getMyBarIngredients() {

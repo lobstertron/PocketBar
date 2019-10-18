@@ -1,6 +1,5 @@
 package com.core.database;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,9 +8,15 @@ import androidx.room.PrimaryKey;
 public class Ingredient {
 
     @PrimaryKey
-    @NonNull
+    @ColumnInfo(name = "id")
+    private int id;
+
+    @ColumnInfo(name = "categoryId")
+    private int categoryId;
+
     @ColumnInfo(name = "name")
     private String name;
+
 
     public Ingredient(String name) {
         this.name = name;
@@ -21,4 +26,23 @@ public class Ingredient {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
