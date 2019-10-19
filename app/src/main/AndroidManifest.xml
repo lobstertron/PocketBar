@@ -9,31 +9,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--  <activity android:name=".ShoppingList"></activity>   -->
         <activity
-            android:name="com.core.android.pocketbar.SearchActivity"
+            android:name=".ShoppingList"
+            android:label="Shopping List"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.core.android.pocketbar.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".SearchActivity"
             android:label="@string/title_activity_search"
-            android:parentActivityName="com.core.android.pocketbar.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
+
         <activity
-            android:name="com.core.android.pocketbar.BarActivity"
+            android:name=".BarActivity"
             android:label="@string/title_activity_bar"
-            android:parentActivityName="com.core.android.pocketbar.MainActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
-        <activity android:name="com.core.android.pocketbar.MainActivity">
+
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
