@@ -28,5 +28,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/launch_search_button" />
 
+    <Button
+        android:id="@+id/launch_shoppinglist_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Open Shopping List"
+        android:onClick="launchShoppingList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launch_bar_button" />
+    />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

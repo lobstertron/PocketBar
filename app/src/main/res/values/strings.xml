@@ -95,4 +95,6 @@
     <string name="ok">Okay</string>
     <string name="cancel">Cancel</string>
     <string name="add_ingredient_hint">Enter ingredient</string>
+    <string name="title_activity_shoppinglist">Shopping List</string>
+    <string name="shopping_list_title">Shopping List</string>
 </resources>

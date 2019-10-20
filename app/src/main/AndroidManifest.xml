@@ -13,7 +13,7 @@
         <!--  <activity android:name=".ShoppingList"></activity>   -->
         <activity
             android:name=".ShoppingList"
-            android:label="Shopping List"
+            android:label="@string/title_activity_shoppinglist"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

@@ -25,4 +25,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
+
+    public void launchShoppingList(View view) {
+
+        Intent intentShopList = new Intent(this, ShoppingList.class);
+        startActivity(intentShopList);
+
+    }
 }
