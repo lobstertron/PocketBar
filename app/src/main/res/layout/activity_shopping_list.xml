@@ -48,13 +48,21 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toStartOf="@+id/button"
-        android:layout_toLeftOf="@+id/button"
+        android:layout_toStartOf="@+id/button_add"
+        android:layout_toLeftOf="@+id/button_add"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Enter Item" />
 
-    <!--  android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"  -->
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_shoplistadd">
+        >
+
+
+    </ScrollView>
 
 
 </RelativeLayout>
