@@ -9,8 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--  <activity android:name=".ShoppingList"></activity>   -->
+        <activity
+            android:name=".RecipeActivity"
+            android:label="Recipe"
+            android:parentActivityName=".SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.core.android.pocketbar.SearchActivity"/>
+        </activity>
         <activity
             android:name=".ShoppingList"
             android:label="@string/title_activity_shoppinglist"
@@ -20,7 +27,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
-
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
@@ -30,7 +36,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
-
         <activity
             android:name=".BarActivity"
             android:label="@string/title_activity_bar"
@@ -40,14 +45,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
