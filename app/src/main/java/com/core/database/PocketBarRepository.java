@@ -17,6 +17,11 @@ public class PocketBarRepository {
         mPocketBarDao = db.pocketbarDao();
     }
 
+    /*************************Ingredient methods and objects********************************/
+    public List<Ingredient> getAllIngredients() {
+        return mPocketBarDao.getAllIngredients();
+    }
+
     /************************** Cocktail methods and Objects **************************************/
     public void insertCocktail(Cocktail cocktail) {
         new PocketBarRepository.insertCocktailAsyncTask(mPocketBarDao).execute(cocktail);

@@ -29,6 +29,19 @@
         <item name="android:textColor">@color/colorTextPrimary</item>
     </style>
 
+    <style name="ingredient_tray_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">
+            @android:style/TextAppearance.Small
+        </item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+    </style>
+
     <style name="button_style" parent="android:style/Widget.Material.Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
