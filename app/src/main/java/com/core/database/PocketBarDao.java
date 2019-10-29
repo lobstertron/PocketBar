@@ -72,5 +72,8 @@ public interface PocketBarDao {
     @Query("SELECT * FROM cocktail WHERE name IN(:names) order by name ASC")
     List<Cocktail> searchCocktails(String[] names);
 
+    @Query("SELECT * from cocktail_line WHERE cocktailId = :ID")
+    List<CocktailLine> generateCocktailRecipe(int ID);
+
 
 }

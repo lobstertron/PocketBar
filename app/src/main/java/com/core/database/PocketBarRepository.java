@@ -91,4 +91,8 @@ public class PocketBarRepository {
             return null;
         }
     }
+
+    public List<CocktailLine> generateRecipe(int cocktailId){
+        return mPocketBarDao.generateCocktailRecipe(cocktailId);
+    }
 }
