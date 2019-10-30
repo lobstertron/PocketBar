@@ -95,19 +95,27 @@ public class PocketBarRepository {
     }
 
     /******************* Recipe Page methods ******************/
-    public List<CocktailLine> generateRecipe(int cocktailId){
+    public List<CocktailLine> generateCocktailLines(int cocktailId){
 
         // TODO ** maybe this could handle everything that I need to do. Basically just need to get Strings anyway.
-        return mPocketBarDao.generateCocktailRecipe(cocktailId);
+        List<CocktailLine> cocktailLines = mPocketBarDao.generateCocktailLines(cocktailId);
+        List<String> ingredients = new ArrayList<>();
+        for(int i = 0; i < cocktailLines.size(); i++){
+            ingredients.add(mPocketBarDao.getIngredient(cocktailLines.get(i).getIngredientId()));
+        }
+
+
+
+        return mPocketBarDao.generateCocktailLines(cocktailId);
     }
 
-    /** for now commenting this out
+    // for now commenting this out
     public List<String> generateRecipeIngredients(List<CocktailLine> linesForIngredientIds){
         List<String> ingredients = new ArrayList<>();
         for(int i = 0; i < linesForIngredientIds.size(); i++){
-            ingredients.add(mPocketBarDao.generateIngredients(linesForIngredientIds.get(i).getIngredientId()));
+            ingredients.add(mPocketBarDao.getIngredient(linesForIngredientIds.get(i).getIngredientId()));
         }
 
         return ingredients;
-    } */
+    }
 }

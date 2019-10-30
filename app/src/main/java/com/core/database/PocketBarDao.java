@@ -73,10 +73,10 @@ public interface PocketBarDao {
     List<Cocktail> searchCocktails(String[] names);
 
     @Query("SELECT * from cocktail_line WHERE cocktailId = :ID")
-    List<CocktailLine> generateCocktailRecipe(int ID);
+    List<CocktailLine> generateCocktailLines(int ID);
 
     @Query("SELECT name from ingredient WHERE id = :ID")
-    String generateIngredients(int ID);
+    String getIngredient(int ID);
 
 
 

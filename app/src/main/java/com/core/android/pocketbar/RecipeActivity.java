@@ -39,9 +39,9 @@ public class RecipeActivity extends AppCompatActivity {
         recipeText = findViewById(R.id.recipe);
         directionsText = findViewById(R.id.directions);
         // set the text in that TextView
-        //directionsText.setText(cocktailName + "\n\nDirections:\n" + mixingDirections);
+        directionsText.setText(cocktailName + "\n\nDirections:\n" + mixingDirections);
 
-        new generateCocktailLinesAsyncTask(mRepository, this).execute();
+        new generateCocktailLinesAsyncTask(mRepository).execute();
     }
 
     public TextView getRecipeText(){
@@ -60,66 +60,32 @@ public class RecipeActivity extends AppCompatActivity {
      * Runs the cocktail recipe generator asynchronously in a background thread, updating the contents of
      * the cocktail adapter once complete
      */
-    private static class generateCocktailLinesAsyncTask extends AsyncTask<Void, Void, List<CocktailLine>> {
+    private class generateCocktailLinesAsyncTask extends AsyncTask<Void, Void, List<String>> {
 
         private PocketBarRepository cocktailRepository;
-        // having these in each AsyncTask could cause issues, but I'm experimenting.
-        private RecipeActivity recipeActivity;
+        List<CocktailLine> cocktailLines;
 
-        generateCocktailLinesAsyncTask(PocketBarRepository cr, RecipeActivity activity) {
+        generateCocktailLinesAsyncTask(PocketBarRepository cr) {
             cocktailRepository = cr;
-            recipeActivity = activity;
         }
 
         @Override
-        protected List<CocktailLine> doInBackground(Void... voids) {
-            return cocktailRepository.generateRecipe(recipeActivity.getCocktailId());
+        protected List<String> doInBackground(Void... voids) {
+            cocktailLines = cocktailRepository.generateCocktailLines(cocktailId);
+
+            return cocktailRepository.generateRecipeIngredients(cocktailLines);
         }
 
         /**
          * Generate Recipe layout.
          */
-        protected void onPostExecute(List<CocktailLine> cocktailLines) {
-            // get a list of all ingredients in recipe
-            cocktailRepository.generateRecipe(recipeActivity.getCocktailId());
+        protected void onPostExecute(List<String> ingredients) {
 
-            /**
             for(int i = 0; i < cocktailLines.size(); i++){
-                recipeActivity.getRecipeText().append(ingredients.get(i)+ " ");
-                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount() + " ");
-                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount_literal() + "\n");
-            }*/
-        }
-    }
-
-    /** for now commenting this out
-    private static class generateCocktailIngredientsAsyncTask extends AsyncTask<List<CocktailLine>, Void, List<String>>{
-
-        private PocketBarRepository cocktailRepository;
-        // having these in each AsyncTask could cause issues, but I'm experimenting.
-        private RecipeActivity recipeActivity;
-        private List<CocktailLine> cocktailLines;
-
-        generateCocktailIngredientsAsyncTask(PocketBarRepository cr,List<CocktailLine> lines, RecipeActivity activity) {
-            cocktailRepository = cr;
-            cocktailLines = lines;
-            recipeActivity = activity;
-        }
-
-        @Override
-        protected List<String> doInBackground(List<CocktailLine>... cocktailLines) {
-            List<String> ingredients = new ArrayList<>();
-            return ingredients = cocktailRepository.generateRecipeIngredients(cocktailLines[0]);
-        }
-
-        protected void onPostExecute(List<String> ingredients){
-            for(int i = 0; i < cocktailLines.size(); i++){
-                recipeActivity.getRecipeText().setText("WHAT THE FUCK");
-                recipeActivity.getRecipeText().append(ingredients.get(i)+ " ");
-                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount() + " ");
-                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount_literal() + "\n");
+                recipeText.append(ingredients.get(i)+ " ");
+                recipeText.append(cocktailLines.get(i).getAmount() + " ");
+                recipeText.append(cocktailLines.get(i).getAmount_literal() + "\n");
             }
         }
-    } */
-
+    }
 }
