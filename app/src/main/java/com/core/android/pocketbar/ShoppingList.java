@@ -1,20 +1,34 @@
 package com.core.android.pocketbar;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.LinkedList;
+
+
+
 
 public class ShoppingList extends AppCompatActivity {
 
 
-    private final LinkedList<String> shoppingList = new LinkedList<>();
-
+    private LinkedList<String> shoppingList = new LinkedList<>();
     private EditText mAddItemEntry;
+
+    private LayoutInflater mShopListInflater;
+
+
+
+
+    public ShoppingList(Context context, LinkedList<String> itemList) {
+        mShopListInflater = LayoutInflater.from(context);
+        this.shoppingList = itemList;
+    }
+
+
 
 
     @Override
