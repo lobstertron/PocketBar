@@ -11,4 +11,5 @@
         android:layout_height="wrap_content"
         style="@style/text_view_style"
         tools:text="placeholder text" />
+
 </LinearLayout>
