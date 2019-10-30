@@ -75,5 +75,9 @@ public interface PocketBarDao {
     @Query("SELECT * from cocktail_line WHERE cocktailId = :ID")
     List<CocktailLine> generateCocktailRecipe(int ID);
 
+    @Query("SELECT name from ingredient WHERE id = :ID")
+    String generateIngredients(int ID);
+
+
 
 }

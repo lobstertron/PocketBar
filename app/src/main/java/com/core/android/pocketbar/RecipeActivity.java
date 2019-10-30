@@ -12,12 +12,15 @@ import com.core.database.CocktailLine;
 import com.core.database.CocktailListAdapter;
 import com.core.database.PocketBarRepository;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
 
-    private static int cocktailId;
-    private static TextView recipe;
+    private int cocktailId;
+    private TextView recipeText;
+    private TextView directionsText;
     private PocketBarRepository mRepository;
 
 
@@ -32,41 +35,91 @@ public class RecipeActivity extends AppCompatActivity {
         String cocktailName = intent.getStringExtra(CocktailListAdapter.NAME_MESSAGE);
         String mixingDirections = intent.getStringExtra(CocktailListAdapter.DIRECTIONS_MESSAGE);
         cocktailId = intent.getIntExtra(CocktailListAdapter.COCKTAIL_ID, 0);
-        // get reference to the TextView that you want to display the message to
-        recipe = findViewById(R.id.textView2);
+        // get reference to the TextViews that you want to display the message to
+        recipeText = findViewById(R.id.recipe);
+        directionsText = findViewById(R.id.directions);
         // set the text in that TextView
-        recipe.setText(cocktailName + "\n\nDirections:\n" + mixingDirections);
+        //directionsText.setText(cocktailName + "\n\nDirections:\n" + mixingDirections);
 
-        new generateRecipeAsyncTask(mRepository).execute();
+        new generateCocktailLinesAsyncTask(mRepository, this).execute();
+    }
+
+    public TextView getRecipeText(){
+        return recipeText;
+    }
+
+    public TextView getDirectionsText(){
+        return directionsText;
+    }
+
+    public int getCocktailId() {
+        return cocktailId;
     }
 
     /**
      * Runs the cocktail recipe generator asynchronously in a background thread, updating the contents of
      * the cocktail adapter once complete
      */
-    private static class generateRecipeAsyncTask extends AsyncTask<Void, Void, List<CocktailLine>> {
+    private static class generateCocktailLinesAsyncTask extends AsyncTask<Void, Void, List<CocktailLine>> {
 
         private PocketBarRepository cocktailRepository;
+        // having these in each AsyncTask could cause issues, but I'm experimenting.
+        private RecipeActivity recipeActivity;
 
-        generateRecipeAsyncTask(PocketBarRepository cr) {
+        generateCocktailLinesAsyncTask(PocketBarRepository cr, RecipeActivity activity) {
             cocktailRepository = cr;
+            recipeActivity = activity;
         }
 
         @Override
         protected List<CocktailLine> doInBackground(Void... voids) {
-            return cocktailRepository.generateRecipe(cocktailId);
+            return cocktailRepository.generateRecipe(recipeActivity.getCocktailId());
         }
 
         /**
-         * Update the cocktails in the adapter, which will update the view
+         * Generate Recipe layout.
          */
         protected void onPostExecute(List<CocktailLine> cocktailLines) {
+            // get a list of all ingredients in recipe
+            cocktailRepository.generateRecipe(recipeActivity.getCocktailId());
+
+            /**
             for(int i = 0; i < cocktailLines.size(); i++){
-                recipe.append(cocktailLines.get(i).toString() + " ");
-                recipe.append(cocktailLines.get(i).getAmount() + " ");
-                recipe.append(cocktailLines.get(i).getAmount_literal() + "\n");
-            }
+                recipeActivity.getRecipeText().append(ingredients.get(i)+ " ");
+                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount() + " ");
+                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount_literal() + "\n");
+            }*/
         }
     }
+
+    /** for now commenting this out
+    private static class generateCocktailIngredientsAsyncTask extends AsyncTask<List<CocktailLine>, Void, List<String>>{
+
+        private PocketBarRepository cocktailRepository;
+        // having these in each AsyncTask could cause issues, but I'm experimenting.
+        private RecipeActivity recipeActivity;
+        private List<CocktailLine> cocktailLines;
+
+        generateCocktailIngredientsAsyncTask(PocketBarRepository cr,List<CocktailLine> lines, RecipeActivity activity) {
+            cocktailRepository = cr;
+            cocktailLines = lines;
+            recipeActivity = activity;
+        }
+
+        @Override
+        protected List<String> doInBackground(List<CocktailLine>... cocktailLines) {
+            List<String> ingredients = new ArrayList<>();
+            return ingredients = cocktailRepository.generateRecipeIngredients(cocktailLines[0]);
+        }
+
+        protected void onPostExecute(List<String> ingredients){
+            for(int i = 0; i < cocktailLines.size(); i++){
+                recipeActivity.getRecipeText().setText("WHAT THE FUCK");
+                recipeActivity.getRecipeText().append(ingredients.get(i)+ " ");
+                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount() + " ");
+                recipeActivity.getRecipeText().append(cocktailLines.get(i).getAmount_literal() + "\n");
+            }
+        }
+    } */
 
 }
