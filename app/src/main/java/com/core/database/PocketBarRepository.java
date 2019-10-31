@@ -3,6 +3,8 @@ package com.core.database;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -90,5 +92,30 @@ public class PocketBarRepository {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }
+    }
+
+    /******************* Recipe Page methods ******************/
+    public List<CocktailLine> generateCocktailLines(int cocktailId){
+
+        // TODO ** maybe this could handle everything that I need to do. Basically just need to get Strings anyway.
+        List<CocktailLine> cocktailLines = mPocketBarDao.generateCocktailLines(cocktailId);
+        List<String> ingredients = new ArrayList<>();
+        for(int i = 0; i < cocktailLines.size(); i++){
+            ingredients.add(mPocketBarDao.getIngredient(cocktailLines.get(i).getIngredientId()));
+        }
+
+
+
+        return mPocketBarDao.generateCocktailLines(cocktailId);
+    }
+
+    // for now commenting this out
+    public List<String> generateRecipeIngredients(List<CocktailLine> linesForIngredientIds){
+        List<String> ingredients = new ArrayList<>();
+        for(int i = 0; i < linesForIngredientIds.size(); i++){
+            ingredients.add(mPocketBarDao.getIngredient(linesForIngredientIds.get(i).getIngredientId()));
+        }
+
+        return ingredients;
     }
 }

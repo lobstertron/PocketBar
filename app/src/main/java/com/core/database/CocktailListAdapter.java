@@ -19,6 +19,7 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
     // key for intent extra
     public static final String NAME_MESSAGE = "com.core.android.pocketbar.NAME";
     public static final String DIRECTIONS_MESSAGE = "com.core.android.pocketbar.DIRECTIONS";
+    public static final String COCKTAIL_ID = "com.core.android.pocketbar.COCKTAIL_ID";
     //Builds a cocktail view from a xml specification
     private final LayoutInflater mInflater;
     private List<Cocktail> mCocktails; //Cocktails the adapter is managing
@@ -77,9 +78,11 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
             // use ^^ that to access the affected item in mWordList (LinkedList holding data)
             String cocktailName = mCocktails.get(mPosition).getName();
             String mixingDirections = mCocktails.get(mPosition).getDirections();
+            int id = mCocktails.get(mPosition).getId();
             // add text to the 'Intent' as an extra
             intent.putExtra(NAME_MESSAGE, cocktailName);
             intent.putExtra(DIRECTIONS_MESSAGE, mixingDirections);
+            intent.putExtra(COCKTAIL_ID, id);
 
             context.startActivity(intent);
         }
