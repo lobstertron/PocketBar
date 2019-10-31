@@ -18,7 +18,7 @@ public class CocktailLine {
     private int ingredientId;
 
     @ColumnInfo(name = "amount_literal")
-    private int amount_literal;
+    private String amount_literal;
 
     @ColumnInfo(name = "amount")
     private double amount;
@@ -47,11 +47,11 @@ public class CocktailLine {
         this.ingredientId = ingredientId;
     }
 
-    public int getAmount_literal() {
+    public String getAmount_literal() {
         return amount_literal;
     }
 
-    public void setAmount_literal(int amount_literal) {
+    public void setAmount_literal(String amount_literal) {
         this.amount_literal = amount_literal;
     }
 
