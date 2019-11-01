@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:id="@+id/ingredient_tray_item"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:onClick="removeIngredient">
+    android:orientation="horizontal"
+    android:background="@color/colorPrimary"
+    android:layout_margin="2dp">
 
     <TextView
         android:id="@+id/textView"
+        style="@style/ingredient_tray_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/ingredient_tray_style"
         tools:text="placeholder text" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:onClick="removeIngredient"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
 </LinearLayout>

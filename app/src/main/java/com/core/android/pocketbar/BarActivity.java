@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -56,6 +57,16 @@ public class BarActivity extends AppCompatActivity {
     }
 
     /**
+     * Add an ingredient to the default bar and update view.
+     */
+    public void removeIngredient(View view) {
+//        String ingredientName = view.getParent().toString()
+        TextView ingredientTextView = ((View) view.getParent()).findViewById(R.id.bar_ingredient_name);
+        String ingredientName = ingredientTextView.getText().toString();
+        new deleteBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(ingredientName);
+    }
+
+    /**
      * Get all ingredients in the default bar and update view.
      */
     public void getBarIngredients() {
@@ -79,6 +90,34 @@ public class BarActivity extends AppCompatActivity {
         protected List<BarIngredient> doInBackground(BarIngredient... barIngredients) {
             // Return a String result.
             ingredientRepository.insertBarIngredient(barIngredients[0]);
+            return ingredientRepository.getMyBarIngredients();
+        }
+
+        /**
+         * Update the cocktails in the adapter, which will update the view
+         */
+        protected void onPostExecute(List<BarIngredient> cocktails) {
+            new barAsyncTask(ingredientRepository, ingredientListAdapter).execute();
+        }
+    }
+
+    /**
+     * Inserts a new ingredient into the default bar. Once inserted, updates the adapter
+     */
+    private static class deleteBarIngredientAsyncTask extends AsyncTask<String, Void, List<BarIngredient>> {
+
+        private PocketBarRepository ingredientRepository;
+        private BarIngredientListAdapter ingredientListAdapter;
+
+        deleteBarIngredientAsyncTask(PocketBarRepository cr, BarIngredientListAdapter adapter) {
+            ingredientRepository = cr;
+            ingredientListAdapter = adapter;
+        }
+
+        @Override
+        protected List<BarIngredient> doInBackground(String... barIngredients) {
+            // Return a String result.
+            ingredientRepository.deleteBarIngredient(barIngredients[0]);
             return ingredientRepository.getMyBarIngredients();
         }
 

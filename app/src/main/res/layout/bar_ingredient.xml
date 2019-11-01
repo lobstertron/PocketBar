@@ -2,11 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/bar_ingredient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></TextView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:onClick="removeIngredient"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 </LinearLayout>
 
 <!--https://www.androidtutorialpoint.com/basics/dynamically-add-and-remove-views-in-android/-->

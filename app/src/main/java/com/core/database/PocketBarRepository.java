@@ -4,7 +4,6 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -79,6 +78,10 @@ public class PocketBarRepository {
         new PocketBarRepository.insertBarIngredientAsyncTask(mPocketBarDao).execute(barIngredient);
     }
 
+    public void deleteBarIngredient(String ingredientName) {
+        new PocketBarRepository.deleteBarIngredientAsyncTask(mPocketBarDao).execute(ingredientName);
+    }
+
     private static class insertBarIngredientAsyncTask extends AsyncTask<BarIngredient, Void, Void> {
 
         private PocketBarDao mAsyncTaskDao;
@@ -90,6 +93,21 @@ public class PocketBarRepository {
         @Override
         protected Void doInBackground(final BarIngredient... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteBarIngredientAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private PocketBarDao mAsyncTaskDao;
+
+        deleteBarIngredientAsyncTask(PocketBarDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String... params) {
+            mAsyncTaskDao.delete(params[0]);
             return null;
         }
     }

@@ -29,6 +29,9 @@ public interface PocketBarDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(BarIngredient barIngredient);
 
+    @Query("DELETE FROM bar_ingredient where ingredient = :name")
+    void delete(String name);
+
     @Query("DELETE FROM ingredient")
     void deleteAllIngredients();
 
@@ -59,9 +62,6 @@ public interface PocketBarDao {
 
     @Query("SELECT * from bar_ingredient")
     List<BarIngredient> getAllBarIngredients();
-
-//    @Query("SELECT * from ingredient inner join (select * from bar_ingredient where bar_name = 'main_bar') as my_bar_ingredients on my_bar_ingredients.ingredient = ingredient.name ORDER BY name ASC")
-//    List<Ingredient> getMyBarIngredients();
 
     @Query("SELECT * from bar_ingredient where bar_name = 'main_bar' ORDER BY ingredient ASC")
     List<BarIngredient> getMyBarIngredients();

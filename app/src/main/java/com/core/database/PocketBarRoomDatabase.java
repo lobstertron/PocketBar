@@ -14,7 +14,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         CocktailLine.class,
         BarIngredient.class,
         Bar.class},
-        version = 10,
+        version = 11,
         exportSchema = false)
 public abstract class PocketBarRoomDatabase extends RoomDatabase {
     public abstract PocketBarDao pocketbarDao();
@@ -3099,6 +3099,9 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('vodka','main_bar');");
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('tequila','main_bar');");
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('ginger beer','main_bar');");
+            sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('dark rum','main_bar');");
+            sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('grenadine','main_bar');");
+            sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('orange','main_bar');");
         }
     }
 }

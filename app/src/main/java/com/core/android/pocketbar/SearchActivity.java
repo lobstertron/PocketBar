@@ -3,6 +3,7 @@ package com.core.android.pocketbar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -57,6 +58,13 @@ public class SearchActivity extends AppCompatActivity {
         mIngredientAdapterList = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line);
         mSearchCocktailsEntry.setAdapter(mIngredientAdapterList);
+        //When the autocomplete suggestion is clicked, propogate to the ingredient tray
+        mSearchCocktailsEntry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                addIngredient(view);
+            }
+        });
 
         //Get all ingredients to populate autocomplete list
         new getAllIngredientsAsyncTask(mRepository, mIngredientAdapterList).execute();
@@ -81,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
                 return;
             }
         }
-        View addedView = getLayoutInflater().inflate(R.layout.ingredient_tray_item, null);
+        View addedView = getLayoutInflater().inflate(R.layout.ingredient_tray_item, mIngredientTray, false);
         TextView ingredientTrayName = addedView.findViewById(R.id.textView);
         ingredientTrayName.setText(ingredientName);
         mIngredientTray.addView(addedView);
@@ -113,7 +121,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void removeIngredient(View view) {
-        mIngredientTray.removeView(view);
+        //Get the containing view, which should be the immediate parent
+        View ingredientTrayItem = (View) view.getParent();
+        mIngredientTray.removeView(ingredientTrayItem);
     }
 
     /**
