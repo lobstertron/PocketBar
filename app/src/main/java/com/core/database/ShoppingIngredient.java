@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-@Entity(tableName = "shopping_ingredient", primaryKeys = {"ingredient"})
+@Entity(tableName = "shopping_ingredient", primaryKeys = {"ingredient", "bar_name"})
 public class ShoppingIngredient {
 
 
@@ -13,7 +13,12 @@ public class ShoppingIngredient {
     private String ingredient;
 
 
-    public ShoppingIngredient(String ingredient) {
+    @NonNull
+    @ColumnInfo(name = "bar_name")
+    private String barName;
+
+
+    public ShoppingIngredient(String ingredientToAdd, String ingredient) {
         this.ingredient = ingredient;
     }
 
@@ -21,5 +26,33 @@ public class ShoppingIngredient {
     public String getIngredient() {
         return ingredient;
     }
+
+
+    @NonNull
+    public String getBarName() {
+        return barName;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
