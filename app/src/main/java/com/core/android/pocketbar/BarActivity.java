@@ -53,7 +53,11 @@ public class BarActivity extends AppCompatActivity {
      */
     public void addIngredient(View view) {
         String ingredientToAdd = mAddIngredientEntry.getText().toString();
-        new insertBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(new BarIngredient(ingredientToAdd, "main_bar"));
+        if (ingredientToAdd.length() > 0) {
+            //clear the search text
+            mAddIngredientEntry.setText("");
+            new insertBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(new BarIngredient(ingredientToAdd, "main_bar"));
+        }
     }
 
     /**
@@ -104,7 +108,7 @@ public class BarActivity extends AppCompatActivity {
     /**
      * Inserts a new ingredient into the default bar. Once inserted, updates the adapter
      */
-    private static class deleteBarIngredientAsyncTask extends AsyncTask<String, Void, List<BarIngredient>> {
+    private static class deleteBarIngredientAsyncTask extends AsyncTask<String, Void, Void> {
 
         private PocketBarRepository ingredientRepository;
         private BarIngredientListAdapter ingredientListAdapter;
@@ -115,16 +119,17 @@ public class BarActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<BarIngredient> doInBackground(String... barIngredients) {
+        protected Void doInBackground(String... barIngredients) {
             // Return a String result.
             ingredientRepository.deleteBarIngredient(barIngredients[0]);
-            return ingredientRepository.getMyBarIngredients();
+            //return ingredientRepository.getMyBarIngredients();
+            return null;
         }
 
         /**
          * Update the cocktails in the adapter, which will update the view
          */
-        protected void onPostExecute(List<BarIngredient> cocktails) {
+        protected void onPostExecute(Void diov) {
             new barAsyncTask(ingredientRepository, ingredientListAdapter).execute();
         }
     }

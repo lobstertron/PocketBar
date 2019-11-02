@@ -23,7 +23,7 @@ public class BarIngredientListAdapter extends RecyclerView.Adapter<BarIngredient
 
     @Override
     public IngredientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.bar_ingredient, parent, false);
         return new IngredientViewHolder(itemView);
     }
 
@@ -55,7 +55,7 @@ public class BarIngredientListAdapter extends RecyclerView.Adapter<BarIngredient
 
         private IngredientViewHolder(View itemView) {
             super(itemView);
-            ingredientItemView = itemView.findViewById(R.id.textView);
+            ingredientItemView = itemView.findViewById(R.id.bar_ingredient_name);
         }
     }
 }
