@@ -136,4 +136,65 @@ public class PocketBarRepository {
 
         return ingredients;
     }
+
+
+
+
+
+
+
+
+
+    /************************** Shopping List ingredient methods and objects ********************************/
+    public List<ShoppingIngredient> getShoppingIngredients() {
+        return mPocketBarDao.getShoppingIngredients();
+    }
+
+    public void insertShoppingIngredient(ShoppingIngredient shoppingIngredient) {
+        new PocketBarRepository.insertShoppingIngredientAsyncTask(mPocketBarDao).execute(shoppingIngredient);
+    }
+
+    public void deleteShoppingIngredient(String ingredientName) {
+        new PocketBarRepository.deleteShoppingIngredientAsyncTask(mPocketBarDao).execute(ingredientName);
+    }
+
+    private static class insertShoppingIngredientAsyncTask extends AsyncTask<ShoppingIngredient, Void, Void> {
+
+        private PocketBarDao mAsyncTaskDao;
+
+        insertShoppingIngredientAsyncTask(PocketBarDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final ShoppingIngredient... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteShoppingIngredientAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private PocketBarDao mAsyncTaskDao;
+
+        deleteShoppingIngredientAsyncTask(PocketBarDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }
