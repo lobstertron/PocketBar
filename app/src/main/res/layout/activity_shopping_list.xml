@@ -26,5 +26,4 @@
 
     <include layout="@layout/content_shopping_list" />
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
