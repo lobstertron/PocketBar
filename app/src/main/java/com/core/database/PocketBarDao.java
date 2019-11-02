@@ -80,4 +80,16 @@ public interface PocketBarDao {
 
 
 
+
+    /////////////////////////////// Arick Additions ///////////////////////////////
+
+    @Query("SELECT * from shopping_ingredient ORDER BY ingredient ASC")
+    List<ShoppingIngredient> getShoppingIngredients();
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insert(ShoppingIngredient shoppingIngredient);
+
+    ///////////////////////////////////////////////////////////////////////////////
+
+
 }
