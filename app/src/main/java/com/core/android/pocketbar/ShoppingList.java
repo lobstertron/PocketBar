@@ -10,10 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.core.database.BarIngredient;
 import com.core.database.BarIngredientListAdapter;
 import com.core.database.PocketBarRepository;
+import com.core.database.ShoppingIngredient;
+import com.core.database.ShoppingIngredientListAdapter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,9 +33,23 @@ public class ShoppingList extends AppCompatActivity {
 
 
     //The view containing the list of ingredients in the bar
-    private EditText mAddItemEntry;
+    private EditText sAddIngredientEntry;
+
+    //The view containing the list of ingredients in the bar
+    private RecyclerView sRecyclerView;
+    //The adapter holding the data backing the recyclerview
+    private ShoppingIngredientListAdapter sShoppingIngredientListAdapter;
+    //The data access object providing access to the data stored in the application database
+    private PocketBarRepository sIngredientRepository;
+
+
     // Not exactly sure what this is for yet but it's was part of the tutorial.
-    private LayoutInflater mShopListInflater;
+    private LayoutInflater sShopListInflater;
+
+
+
+
+
 
 
 
@@ -48,7 +67,25 @@ public class ShoppingList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_shopping_list);
 
-        mAddItemEntry = findViewById(R.id.editText_shoplistadd);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        sRecyclerView = findViewById(R.id.recyclerview);
+        sShoppingIngredientListAdapter = new ShoppingIngredientListAdapter(this);
+        //Associate the adapter with the recyclerview - when the adapter's data changes it
+        //will inform the view that it needs to update
+        sRecyclerView.setAdapter(sShoppingIngredientListAdapter);
+        sRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        sAddIngredientEntry = findViewById(R.id.editText_shoplistadd);
+
+
+        sIngredientRepository = new PocketBarRepository(getApplication());
+        //Grab the contents of the main bar
+        getShoppingIngredients();
+
 
     }
 
@@ -56,11 +93,13 @@ public class ShoppingList extends AppCompatActivity {
     /**
      * Add an item to the shopping list and update view.
      */
-    public void addItem(View view) {
+    public void addIngredient(View view) {
 
-        String ingredientToAdd = mAddItemEntry.getText().toString();
+        String ingredientToAdd = sAddIngredientEntry.getText().toString();
         Log.i("AddItem Method", "The Following Was Added: " + ingredientToAdd);
-        new BarActivity.insertBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(new BarIngredient(ingredientToAdd, "main_bar"));
+
+
+        new insertShoppingIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(new ShoppingIngredient(ingredientToAdd, "ingredient"));
     }
 
 
@@ -71,12 +110,18 @@ public class ShoppingList extends AppCompatActivity {
      */
     public void removeIngredient(View view) {
 //        String ingredientName = view.getParent().toString()
-        TextView ingredientTextView = ((View) view.getParent()).findViewById(R.id.bar_ingredient_name);
+        TextView ingredientTextView = ((View) view.getParent()).findViewById(R.id.shopping_ingredient_name);
         String ingredientName = ingredientTextView.getText().toString();
-        new BarActivity.deleteBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(ingredientName);
+        new deleteShoppingIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(ingredientName);
     }
 
 
+
+
+
+    public void getShoppingIngredients() {
+        new ShoppingList.shoppingAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute();
+    }
 
 
 
@@ -87,28 +132,28 @@ public class ShoppingList extends AppCompatActivity {
     /**
      * Inserts a new ingredient into the default bar. Once inserted, updates the adapter
      */
-    private static class insertBarIngredientAsyncTask extends AsyncTask<BarIngredient, Void, List<BarIngredient>> {
+    private static class insertShoppingIngredientAsyncTask extends AsyncTask<ShoppingIngredient, Void, List<ShoppingIngredient>> {
 
-        private PocketBarRepository ingredientRepository;
-        private BarIngredientListAdapter ingredientListAdapter;
+        private PocketBarRepository ingredientShoppingRepository;
+        private ShoppingIngredientListAdapter ingredientShoppingListAdapter;
 
-        insertBarIngredientAsyncTask(PocketBarRepository cr, BarIngredientListAdapter adapter) {
-            ingredientRepository = cr;
-            ingredientListAdapter = adapter;
+        insertShoppingIngredientAsyncTask(PocketBarRepository cr, ShoppingIngredientListAdapter adapter) {
+            ingredientShoppingRepository = cr;
+            ingredientShoppingListAdapter = adapter;
         }
 
         @Override
-        protected List<BarIngredient> doInBackground(BarIngredient... barIngredients) {
+        protected List<ShoppingIngredient> doInBackground(ShoppingIngredient... shoppingIngredients) {
             // Return a String result.
-            ingredientRepository.insertBarIngredient(barIngredients[0]);
-            return ingredientRepository.getMyBarIngredients();
+            ingredientShoppingRepository.insertShoppingIngredient(shoppingIngredients[0]);
+            return ingredientShoppingRepository.getShoppingIngredients();
         }
 
         /**
          * Update the cocktails in the adapter, which will update the view
          */
-        protected void onPostExecute(List<BarIngredient> cocktails) {
-            new BarActivity.barAsyncTask(ingredientRepository, ingredientListAdapter).execute();
+        protected void onPostExecute(List<ShoppingIngredient> cocktails) {
+            new ShoppingList.shoppingAsyncTask(ingredientShoppingRepository, ingredientShoppingListAdapter).execute();
         }
     }
 
@@ -121,20 +166,20 @@ public class ShoppingList extends AppCompatActivity {
     /**
      * Inserts a new ingredient into the default bar. Once inserted, updates the adapter
      */
-    private static class deleteBarIngredientAsyncTask extends AsyncTask<String, Void, Void> {
+    private static class deleteShoppingIngredientAsyncTask extends AsyncTask<String, Void, Void> {
 
         private PocketBarRepository ingredientRepository;
-        private BarIngredientListAdapter ingredientListAdapter;
+        private ShoppingIngredientListAdapter ingredientListAdapter;
 
-        deleteBarIngredientAsyncTask(PocketBarRepository cr, BarIngredientListAdapter adapter) {
+        deleteShoppingIngredientAsyncTask(PocketBarRepository cr, ShoppingIngredientListAdapter adapter) {
             ingredientRepository = cr;
             ingredientListAdapter = adapter;
         }
 
         @Override
-        protected Void doInBackground(String... barIngredients) {
+        protected Void doInBackground(String... ShoppingIngredients) {
             // Return a String result.
-            ingredientRepository.deleteBarIngredient(barIngredients[0]);
+            ingredientRepository.deleteShoppingIngredient(ShoppingIngredients[0]);
             //return ingredientRepository.getMyBarIngredients();
             return null;
         }
@@ -143,7 +188,7 @@ public class ShoppingList extends AppCompatActivity {
          * Update the cocktails in the adapter, which will update the view
          */
         protected void onPostExecute(Void diov) {
-            new BarActivity.barAsyncTask(ingredientRepository, ingredientListAdapter).execute();
+            new ShoppingList.shoppingAsyncTask(ingredientRepository, ingredientListAdapter).execute();
         }
     }
 
@@ -152,27 +197,27 @@ public class ShoppingList extends AppCompatActivity {
     /**
      * Gets the ingredients in the default bar and updates the view with those ingredients
      */
-    private static class barAsyncTask extends AsyncTask<Void, Void, List<BarIngredient>> {
+    private static class shoppingAsyncTask extends AsyncTask<Void, Void, List<ShoppingIngredient>> {
 
         private PocketBarRepository ingredientRepository;
-        private BarIngredientListAdapter ingredientListAdapter;
+        private ShoppingIngredientListAdapter ingredientShoppingListAdapter;
 
-        barAsyncTask(PocketBarRepository cr, BarIngredientListAdapter adapter) {
+        shoppingAsyncTask(PocketBarRepository cr, ShoppingIngredientListAdapter adapter) {
             ingredientRepository = cr;
-            ingredientListAdapter = adapter;
+            ingredientShoppingListAdapter = adapter;
         }
 
         @Override
-        protected List<BarIngredient> doInBackground(Void... voids) {
+        protected List<ShoppingIngredient> doInBackground(Void... voids) {
             // Return a String result.
-            return ingredientRepository.getMyBarIngredients();
+            return ingredientRepository.getShoppingIngredients();
         }
 
         /**
          * Update the cocktails in the adapter, which will update the view
          */
-        protected void onPostExecute(List<BarIngredient> cocktails) {
-            ingredientListAdapter.setIngredients(cocktails);
+        protected void onPostExecute(List<ShoppingIngredient> cocktails) {
+            ingredientShoppingListAdapter.setIngredients(cocktails);
         }
     }
 
