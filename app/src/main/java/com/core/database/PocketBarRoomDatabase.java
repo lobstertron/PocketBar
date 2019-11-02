@@ -3090,6 +3090,11 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
             sqLiteDatabase.execSQL("INSERT INTO bar VALUES ('main_bar');");
         }
 
+
+
+
+
+
         protected void loadBarIngredients(SupportSQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('tonic water','main_bar');");
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('gin','main_bar');");
@@ -3103,5 +3108,18 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('grenadine','main_bar');");
             sqLiteDatabase.execSQL("INSERT INTO bar_ingredient VALUES ('orange','main_bar');");
         }
+
+
+
+        protected void loadShoppingIngredients(SupportSQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Sour');");
+            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Whiskey');");
+            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Olives');");
+
+
+        }
+
+
+
     }
 }
