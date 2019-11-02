@@ -65,13 +65,13 @@ public class ShoppingList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_shopping_list);
+        setContentView(R.layout.activity_shopping_list);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sRecyclerView = findViewById(R.id.recyclerview);
+        sRecyclerView = findViewById(R.id.recyclerviewShop);
         sShoppingIngredientListAdapter = new ShoppingIngredientListAdapter(this);
         //Associate the adapter with the recyclerview - when the adapter's data changes it
         //will inform the view that it needs to update
@@ -99,7 +99,7 @@ public class ShoppingList extends AppCompatActivity {
         Log.i("AddItem Method", "The Following Was Added: " + ingredientToAdd);
 
 
-        new insertShoppingIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(new ShoppingIngredient(ingredientToAdd, "ingredient"));
+        new insertShoppingIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(new ShoppingIngredient(ingredientToAdd));
     }
 
 

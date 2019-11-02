@@ -13,7 +13,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         Cocktail.class,
         CocktailLine.class,
         BarIngredient.class,
-        Bar.class},
+        Bar.class,
+        ShoppingIngredient.class},
         version = 11,
         exportSchema = false)
 public abstract class PocketBarRoomDatabase extends RoomDatabase {
@@ -76,6 +77,7 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
             loadCocktailLines(sqLiteDatabase);
             loadBars(sqLiteDatabase);
             loadBarIngredients(sqLiteDatabase);
+            loadShoppingIngredients(sqLiteDatabase);
             return null;
         }
 

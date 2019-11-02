@@ -1,6 +1,7 @@
 package com.core.android.pocketbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -28,6 +29,9 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // get the 'Intent that activate this activity
         Intent intent = getIntent();
         mRepository = new PocketBarRepository(getApplication());
@@ -44,13 +48,16 @@ public class RecipeActivity extends AppCompatActivity {
         new generateCocktailLinesAsyncTask(mRepository).execute();
     }
 
+
     public TextView getRecipeText(){
         return recipeText;
     }
 
+
     public TextView getDirectionsText(){
         return directionsText;
     }
+
 
     public int getCocktailId() {
         return cocktailId;
