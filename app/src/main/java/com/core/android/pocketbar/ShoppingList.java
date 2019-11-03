@@ -1,6 +1,5 @@
 package com.core.android.pocketbar;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.core.database.BarIngredient;
-import com.core.database.BarIngredientListAdapter;
 import com.core.database.PocketBarRepository;
 import com.core.database.ShoppingIngredient;
 import com.core.database.ShoppingIngredientListAdapter;
@@ -188,7 +185,7 @@ public class ShoppingList extends AppCompatActivity {
          * Update the cocktails in the adapter, which will update the view
          */
         protected void onPostExecute(Void diov) {
-            new ShoppingList.shoppingAsyncTask(ingredientRepository, ingredientListAdapter).execute();
+            new shoppingAsyncTask(ingredientRepository, ingredientListAdapter).execute();
         }
     }
 

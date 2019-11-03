@@ -107,7 +107,7 @@ public class PocketBarRepository {
 
         @Override
         protected Void doInBackground(final String... params) {
-            mAsyncTaskDao.delete(params[0]);
+            mAsyncTaskDao.deleteBarIngredient(params[0]);
             return null;
         }
     }
@@ -183,7 +183,7 @@ public class PocketBarRepository {
 
         @Override
         protected Void doInBackground(final String... params) {
-            mAsyncTaskDao.delete(params[0]);
+            mAsyncTaskDao.deleteShoppingIngredient(params[0]);
             return null;
         }
     }

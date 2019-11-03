@@ -15,7 +15,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         BarIngredient.class,
         Bar.class,
         ShoppingIngredient.class},
-        version = 11,
+        version = 12,
         exportSchema = false)
 public abstract class PocketBarRoomDatabase extends RoomDatabase {
     public abstract PocketBarDao pocketbarDao();
@@ -3114,9 +3114,9 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
 
 
         protected void loadShoppingIngredients(SupportSQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Sour');");
-            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Whiskey');");
-            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Olives');");
+            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Sour', 'main_bar');");
+            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Whiskey', 'main_bar');");
+            sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Olives', 'main_bar');");
 
 
         }

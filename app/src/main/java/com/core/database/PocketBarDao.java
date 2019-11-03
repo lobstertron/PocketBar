@@ -30,7 +30,10 @@ public interface PocketBarDao {
     void insert(BarIngredient barIngredient);
 
     @Query("DELETE FROM bar_ingredient where ingredient = :name")
-    void delete(String name);
+    void deleteBarIngredient(String name);
+
+    @Query("DELETE FROM shopping_ingredient where ingredient = :name")
+    void deleteShoppingIngredient(String name);
 
     @Query("DELETE FROM ingredient")
     void deleteAllIngredients();
