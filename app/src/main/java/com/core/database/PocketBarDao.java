@@ -81,13 +81,33 @@ public interface PocketBarDao {
 
 
 
-    /////////////////////////////// Arick Additions ///////////////////////////////
 
-    @Query("SELECT * from shopping_ingredient ORDER BY ingredient ASC")
-    List<ShoppingIngredient> getShoppingIngredients();
+
+
+    /////////////////////////////// Arick Additions ///////////////////////////////
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(ShoppingIngredient shoppingIngredient);
+
+    /*@Query("DELETE FROM shopping_ingredient where ingredient = :name")
+    void delete(String name);*/
+
+    @Query("SELECT * from shopping_ingredient")
+    List<ShoppingIngredient> getAllShoppingIngredients();
+
+    @Query("SELECT * from shopping_ingredient where bar_name = 'main_bar' ORDER BY ingredient ASC")
+    List<ShoppingIngredient> getShoppingIngredients();
+
+
+
+
+
+
+
+
+
+
+
 
     ///////////////////////////////////////////////////////////////////////////////
 
