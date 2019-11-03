@@ -99,7 +99,7 @@ public class ShoppingList extends AppCompatActivity {
         Log.i("AddItem Method", "The Following Was Added: " + ingredientToAdd);
 
 
-        new insertShoppingIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(new ShoppingIngredient(ingredientToAdd));
+        new insertShoppingIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(new ShoppingIngredient(ingredientToAdd, "main_bar"));
     }
 
 
