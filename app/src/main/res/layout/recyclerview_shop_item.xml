@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/text_view_style"
-        tools:text="placeholder text" />
+        tools:text="placeholder text"
+        android:background="@color/pocketbar_orange"/>
 
 </LinearLayout>

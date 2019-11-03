@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorTextPrimary">@android:color/white</color>
+    <color name="pocketbar_orange">#F05619</color>
 </resources>

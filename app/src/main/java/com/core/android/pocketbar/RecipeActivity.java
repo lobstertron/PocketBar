@@ -29,21 +29,24 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_recipe);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // insert PocketBar Logo on to Toolbar
+        //getSupportActionBar().setLogo(R.drawable.ic_action_name);
         // get the 'Intent that activate this activity
         Intent intent = getIntent();
         mRepository = new PocketBarRepository(getApplication());
         // get the string from the 'Intent's extras
         String cocktailName = intent.getStringExtra(CocktailListAdapter.NAME_MESSAGE);
+        getSupportActionBar().setTitle(cocktailName);
         String mixingDirections = intent.getStringExtra(CocktailListAdapter.DIRECTIONS_MESSAGE);
         cocktailId = intent.getIntExtra(CocktailListAdapter.COCKTAIL_ID, 0);
         // get reference to the TextViews that you want to display the message to
         recipeText = findViewById(R.id.recipe);
         directionsText = findViewById(R.id.directions);
         // set the text in that TextView
-        directionsText.setText(cocktailName + "\n\nDirections:\n" + mixingDirections);
+        directionsText.setText("Directions:\n" + mixingDirections);
 
         new generateCocktailLinesAsyncTask(mRepository).execute();
     }
@@ -89,8 +92,8 @@ public class RecipeActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> ingredients) {
 
             for(int i = 0; i < cocktailLines.size(); i++){
-                recipeText.append(ingredients.get(i)+ " ");
-                recipeText.append(cocktailLines.get(i).getAmount() + " ");
+                recipeText.append(" - " + ingredients.get(i)+ " ");
+                //recipeText.append(cocktailLines.get(i).getAmount() + " ");
                 recipeText.append(cocktailLines.get(i).getAmount_literal() + "\n");
             }
         }
