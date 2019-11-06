@@ -92,9 +92,10 @@ public class RecipeActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> ingredients) {
 
             for(int i = 0; i < cocktailLines.size(); i++){
-                recipeText.append(" - " + ingredients.get(i)+ " ");
+                recipeText.append(" - " + cocktailLines.get(i).getAmount_literal() + " ");
+                recipeText.append(ingredients.get(i)+ "\n");
                 //recipeText.append(cocktailLines.get(i).getAmount() + " ");
-                recipeText.append(cocktailLines.get(i).getAmount_literal() + "\n");
+                //recipeText.append(cocktailLines.get(i).getAmount_literal() + "\n");
             }
         }
     }
