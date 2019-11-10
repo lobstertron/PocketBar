@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.core.database.BarIngredient;
 import com.core.database.PocketBarRepository;
 import com.core.database.ShoppingIngredient;
 import com.core.database.ShoppingIngredientListAdapter;
@@ -120,6 +121,14 @@ public class ShoppingList extends AppCompatActivity {
         new ShoppingList.shoppingAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute();
     }
 
+    public void addBarIngredient(View view) {
+        //Get the parent view for the selected ingredietn
+        View ingredient = (View) view.getParent();
+        TextView ingredientTextView = (TextView) ingredient.findViewById(R.id.shopping_ingredient_name);
+        String ingredientName = ingredientTextView.getText().toString();
+        new ShoppingList.insertBarIngredientAsyncTask(sIngredientRepository, sShoppingIngredientListAdapter).execute(ingredientName);
+    }
+
 
 
 
@@ -139,6 +148,7 @@ public class ShoppingList extends AppCompatActivity {
             ingredientShoppingListAdapter = adapter;
         }
 
+
         @Override
         protected List<ShoppingIngredient> doInBackground(ShoppingIngredient... shoppingIngredients) {
             // Return a String result.
@@ -151,6 +161,34 @@ public class ShoppingList extends AppCompatActivity {
          */
         protected void onPostExecute(List<ShoppingIngredient> cocktails) {
             new ShoppingList.shoppingAsyncTask(ingredientShoppingRepository, ingredientShoppingListAdapter).execute();
+        }
+    }
+
+    /**
+     * Removes an ingredient from the shopping list and adds it to the bar
+     */
+    private static class insertBarIngredientAsyncTask extends AsyncTask<String, Void, String> {
+
+        private PocketBarRepository ingredientRepository;
+        private ShoppingIngredientListAdapter ingredientListAdapter;
+
+        insertBarIngredientAsyncTask(PocketBarRepository cr, ShoppingIngredientListAdapter adapter) {
+            ingredientRepository = cr;
+            ingredientListAdapter = adapter;
+        }
+
+        @Override
+        protected String doInBackground(String... ingredientsForBar) {
+            // Return a String result.
+            BarIngredient barIngredient = new BarIngredient(ingredientsForBar[0], "main_bar");
+            ingredientRepository.insertBarIngredient(barIngredient);
+            return ingredientsForBar[0];
+        }
+        
+        protected void onPostExecute(String string) {
+            String[] ingredients = new String[1];
+            ingredients[0] = string;
+            new deleteShoppingIngredientAsyncTask(ingredientRepository, ingredientListAdapter).execute(ingredients);
         }
     }
 

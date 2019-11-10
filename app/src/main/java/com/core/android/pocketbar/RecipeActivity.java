@@ -1,20 +1,17 @@
 package com.core.android.pocketbar;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.core.database.Cocktail;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.core.database.CocktailLine;
 import com.core.database.CocktailListAdapter;
 import com.core.database.PocketBarRepository;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -51,6 +48,16 @@ public class RecipeActivity extends AppCompatActivity {
         new generateCocktailLinesAsyncTask(mRepository).execute();
     }
 
+
+    /**
+     * Applies the back button back stack behavior when using the
+     * toolbar's back button. Done to preserve state on the previous screen
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     public TextView getRecipeText(){
         return recipeText;

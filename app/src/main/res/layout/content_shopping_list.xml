@@ -35,9 +35,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:ems="10"
-        android:hint="Enter Iten"
+        android:hint="Enter Item"
         android:inputType="textPersonName"
-        android:text="Enter Item"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />

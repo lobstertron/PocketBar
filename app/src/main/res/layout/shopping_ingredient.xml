@@ -21,6 +21,19 @@
         android:layout_weight="1"
         android:background="@color/pocketbar_orange"/>
 
+    <Button
+        android:id="@+id/add_to_bar_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Add to bar"
+        android:onClick="addBarIngredient"
+        app:layout_constraintBaseline_toBaselineOf="@id/add_ingredient_entry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/add_ingredient_entry" />
+
     <ImageView
         android:id="@+id/imageView_Shopping"
         android:layout_width="wrap_content"
