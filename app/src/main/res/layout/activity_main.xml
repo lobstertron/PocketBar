@@ -21,26 +21,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="#00201818">
+        android:background="@color/pocketbar_orange">
 
         <TextView
             android:id="@+id/launch_search_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Open Search"
-            android:background="#00201818" />
+            android:background="@color/pocketbar_orange" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#00201818" />
+            android:background="@color/pocketbar_orange" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_search_category_default"
-            android:background="#00201818"></ImageView>
+            android:background="@color/pocketbar_orange"></ImageView>
     </LinearLayout>
 
     <LinearLayout
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/launch_search_view"
-        android:background="#00201818">
+        android:background="@color/pocketbar_orange">
 
         <TextView
             android:id="@+id/launch_bar_text"
@@ -92,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/launch_bar_view"
-        android:background="#00201818">
+        android:background="@color/pocketbar_orange">
 
         <TextView
             android:id="@+id/launch_shoppinglist_text"
@@ -126,7 +126,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/launch_shoppinglist_view"
-        android:background="#00201818">
+        android:background="@color/pocketbar_orange">
 
         <TextView
             android:id="@+id/launch_browse_text"
