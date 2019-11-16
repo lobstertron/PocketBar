@@ -6,38 +6,155 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/launch_search_button"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/launch_search_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Open Search"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:onClick="launchSearchActivity"
+        android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#00201818">
 
-    <Button
-        android:id="@+id/launch_bar_button"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/launch_search_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Search"
+            android:background="#00201818" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#00201818" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_search_category_default"
+            android:background="#00201818"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/launch_bar_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Open Bar"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:onClick="launchBarActivity"
+        android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_search_button" />
+        app:layout_constraintTop_toBottomOf="@+id/launch_search_view"
+        android:background="#00201818">
 
-    <Button
-        android:id="@+id/launch_shoppinglist_button"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/launch_bar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Bar" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_action_name"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/launch_shoppinglist_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Open Shopping List"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:onClick="launchShoppingList"
+        android:orientation="horizontal"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_bar_button" />
+        app:layout_constraintTop_toBottomOf="@+id/launch_bar_view"
+        android:background="#00201818">
+
+        <TextView
+            android:id="@+id/launch_shoppinglist_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Shopping List" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/btn_star"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/launch_browse_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:onClick="launchBrowseActivity"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launch_shoppinglist_view"
+        android:background="#00201818">
+
+        <TextView
+            android:id="@+id/launch_browse_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Cocktail Browser" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_view"></ImageView>
+    </LinearLayout>
+
+    <!--    <Button-->
+    <!--        android:id="@+id/launch_shoppinglist_button"i-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:text="Open Shopping List"-->
+    <!--        android:onClick="launchShoppingList"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/launch_bar_button" />-->
     />
 
 

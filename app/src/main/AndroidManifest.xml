@@ -37,6 +37,15 @@
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
         <activity
+            android:name=".BrowseActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.core.android.pocketbar.MainActivity" />
+        </activity>
+        <activity
             android:name=".BarActivity"
             android:label="@string/title_activity_bar"
             android:parentActivityName=".MainActivity"
