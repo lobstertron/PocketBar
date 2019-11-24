@@ -1,17 +1,23 @@
 package com.core.android.pocketbar;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.core.database.BarIngredient;
 import com.core.database.CocktailLine;
 import com.core.database.CocktailListAdapter;
 import com.core.database.PocketBarRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {
@@ -45,7 +51,7 @@ public class RecipeActivity extends AppCompatActivity {
         // set the text in that TextView
         directionsText.setText("Directions:\n" + mixingDirections);
 
-        new generateCocktailLinesAsyncTask(mRepository).execute();
+        new generateRecipeAsyncTask(mRepository).execute();
     }
 
 
@@ -77,32 +83,48 @@ public class RecipeActivity extends AppCompatActivity {
      * Runs the cocktail recipe generator asynchronously in a background thread, updating the contents of
      * the cocktail adapter once complete
      */
-    private class generateCocktailLinesAsyncTask extends AsyncTask<Void, Void, List<String>> {
+    private class generateRecipeAsyncTask extends AsyncTask<Void, Void, List<String>> {
 
         private PocketBarRepository cocktailRepository;
         List<CocktailLine> cocktailLines;
+        List<String> recipeIngredients;
 
-        generateCocktailLinesAsyncTask(PocketBarRepository cr) {
+        generateRecipeAsyncTask(PocketBarRepository cr) {
             cocktailRepository = cr;
         }
 
         @Override
         protected List<String> doInBackground(Void... voids) {
             cocktailLines = cocktailRepository.generateCocktailLines(cocktailId);
+            recipeIngredients = cocktailRepository.generateRecipeIngredients(cocktailLines);
 
-            return cocktailRepository.generateRecipeIngredients(cocktailLines);
+            return cocktailRepository.getStringMyBarIngredients();
         }
 
         /**
          * Generate Recipe layout.
          */
-        protected void onPostExecute(List<String> ingredients) {
+        protected void onPostExecute(List<String> barIngredients) {
 
             for(int i = 0; i < cocktailLines.size(); i++){
-                recipeText.append(" - " + cocktailLines.get(i).getAmount_literal() + " ");
-                recipeText.append(ingredients.get(i)+ "\n");
-                //recipeText.append(cocktailLines.get(i).getAmount() + " ");
-                //recipeText.append(cocktailLines.get(i).getAmount_literal() + "\n");
+
+                if(barIngredients.contains(recipeIngredients.get(i))){
+                    String ingredientLine = " \u2713 " + cocktailLines.get(i).getAmount_literal() + " "
+                            + recipeIngredients.get(i)+ "\n";
+
+                    Spannable spannable = new SpannableString(ingredientLine);
+                    spannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, 2,  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    recipeText.append(spannable);
+                }else{
+                    String ingredientLine = " X " + cocktailLines.get(i).getAmount_literal() + " "
+                            + recipeIngredients.get(i)+ "\n";
+
+                    Spannable spannable = new SpannableString(ingredientLine);
+                    spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, 2,  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    recipeText.append(spannable);
+                }
             }
         }
     }

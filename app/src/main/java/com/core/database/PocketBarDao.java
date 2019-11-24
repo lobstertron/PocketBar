@@ -81,6 +81,9 @@ public interface PocketBarDao {
     @Query("SELECT * from bar_ingredient where bar_name = 'main_bar' ORDER BY ingredient ASC")
     List<BarIngredient> getMyBarIngredients();
 
+    @Query("SELECT ingredient from bar_ingredient where bar_name = 'main_bar'")
+    List<String> getStringMyBarIngredients();
+
     @Query("SELECT * from cocktail ORDER BY name ASC")
     List<Cocktail> getAllCocktails();
 

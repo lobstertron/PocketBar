@@ -81,6 +81,7 @@ public class PocketBarRepository {
     public List<BarIngredient> getMyBarIngredients() {
         return mPocketBarDao.getMyBarIngredients();
     }
+    public List<String> getStringMyBarIngredients() { return mPocketBarDao.getStringMyBarIngredients();}
 
     public void insertBarIngredient(BarIngredient barIngredient) {
         new PocketBarRepository.insertBarIngredientAsyncTask(mPocketBarDao).execute(barIngredient);
