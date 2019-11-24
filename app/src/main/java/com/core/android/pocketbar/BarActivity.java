@@ -61,10 +61,9 @@ public class BarActivity extends AppCompatActivity {
     }
 
     /**
-     * Add an ingredient to the default bar and update view.
+     * Delete an ingredient and update the view
      */
     public void removeIngredient(View view) {
-//        String ingredientName = view.getParent().toString()
         TextView ingredientTextView = ((View) view.getParent()).findViewById(R.id.bar_ingredient_name);
         String ingredientName = ingredientTextView.getText().toString();
         new deleteBarIngredientAsyncTask(mIngredientRepository, mBarIngredientListAdapter).execute(ingredientName);

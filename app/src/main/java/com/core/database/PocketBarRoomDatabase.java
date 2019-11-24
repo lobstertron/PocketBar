@@ -14,8 +14,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
         CocktailLine.class,
         BarIngredient.class,
         Bar.class,
-        ShoppingIngredient.class},
-        version = 12,
+        ShoppingIngredient.class,
+        Favorite.class},
+        version = 13,
         exportSchema = false)
 public abstract class PocketBarRoomDatabase extends RoomDatabase {
     public abstract PocketBarDao pocketbarDao();
@@ -78,6 +79,7 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
             loadBars(sqLiteDatabase);
             loadBarIngredients(sqLiteDatabase);
             loadShoppingIngredients(sqLiteDatabase);
+            loadFavorites(sqLiteDatabase);
             return null;
         }
 
@@ -3119,6 +3121,15 @@ public abstract class PocketBarRoomDatabase extends RoomDatabase {
             sqLiteDatabase.execSQL("INSERT INTO shopping_ingredient VALUES ('Olives', 'main_bar');");
 
 
+        }
+
+        protected void loadFavorites(SupportSQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL("INSERT INTO favorite VALUES (2450);");
+            sqLiteDatabase.execSQL("INSERT INTO favorite VALUES (2576);");
+            sqLiteDatabase.execSQL("INSERT INTO favorite VALUES (2711);");
+            sqLiteDatabase.execSQL("INSERT INTO favorite VALUES (2632);");
+            sqLiteDatabase.execSQL("INSERT INTO favorite VALUES (2538);");
+            sqLiteDatabase.execSQL("INSERT INTO favorite VALUES (2399);");
         }
 
 

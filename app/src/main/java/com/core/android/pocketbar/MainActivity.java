@@ -31,6 +31,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void launchFavoritesActivity(View view) {
+        Intent intent = new Intent(this, FavoritesActivity.class);
+        startActivity(intent);
+    }
+
     public void launchShoppingList(View view) {
         Intent intentShopList = new Intent(this, ShoppingList.class);
         startActivity(intentShopList);

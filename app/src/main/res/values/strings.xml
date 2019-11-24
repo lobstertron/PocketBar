@@ -9,4 +9,5 @@
     <string name="title_activity_shoppinglist">Shopping List</string>
     <string name="shopping_list_title">Shopping List</string>
     <string name="bam_it_worked">BAM! IT WORKED!</string>
+    <string name="title_activity_favorites">Favorites</string>
 </resources>

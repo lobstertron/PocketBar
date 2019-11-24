@@ -145,6 +145,41 @@
             app:srcCompat="@android:drawable/ic_menu_view"></ImageView>
     </LinearLayout>
 
+
+    <LinearLayout
+        android:id="@+id/launch_favorites_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:onClick="launchFavoritesActivity"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/launch_browse_view"
+        android:background="@color/pocketbar_orange">
+
+        <TextView
+            android:id="@+id/launch_favorites_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Favorites" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_menu_view"></ImageView>
+    </LinearLayout>
+
     <!--    <Button-->
     <!--        android:id="@+id/launch_shoppinglist_button"i-->
     <!--        android:layout_width="0dp"-->

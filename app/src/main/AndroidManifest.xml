@@ -46,9 +46,18 @@
                 android:value="com.core.android.pocketbar.MainActivity" />
         </activity>
         <activity
-            android:name=".BarActivity"
+            android:name="BarActivity"
             android:label="@string/title_activity_bar"
             android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.core.android.pocketbar.MainActivity" />
+        </activity>
+        <activity
+            android:name=".FavoritesActivity"
+            android:label="@string/title_activity_favorites"
+            android:parentActivityName=".FavoritesActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

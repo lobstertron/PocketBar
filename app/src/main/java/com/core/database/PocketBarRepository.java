@@ -47,6 +47,12 @@ public class PocketBarRepository {
         return mPocketBarDao.getAllCocktails();
     }
 
+    public List<Cocktail> getAllFavoriteCocktails() {
+        List<Integer> favoriteIds = mPocketBarDao.getAllFavoriteIds();
+        Integer[] favArray = favoriteIds.toArray(new Integer[favoriteIds.size()]);
+        return mPocketBarDao.getCocktailsWithCocktailIds(favArray);
+    }
+
     //good sample string
     public List<Cocktail> searchCocktails(String... ingredients) {
 
@@ -62,11 +68,13 @@ public class PocketBarRepository {
         Integer[] cocktailIds = cocktailIdList.toArray(new Integer[cocktailIdList.size()]);
 
         //Get every cocktail line that does not contain the ingredient
-        List<Cocktail> cocktails = mPocketBarDao.getCocktailsWithCocktailIds(cocktailIds);
+        List<Cocktail> cocktails = mPocketBarDao.getCocktailsNotWithCocktailIds(cocktailIds);
         return cocktails;
     }
 
-
+    public void deleteFavorite(String favoritename) {
+        new PocketBarRepository.deleteFavoriteAsyncTask(mPocketBarDao).execute(favoritename);
+    }
 
 
     /************************** Bar ingredient methods and objects ********************************/
@@ -184,6 +192,23 @@ public class PocketBarRepository {
         @Override
         protected Void doInBackground(final String... params) {
             mAsyncTaskDao.deleteShoppingIngredient(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteFavoriteAsyncTask extends AsyncTask<String, Void, Void> {
+
+        private PocketBarDao mAsyncTaskDao;
+
+        deleteFavoriteAsyncTask(PocketBarDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final String... params) {
+            List<Cocktail> cocktailList = mAsyncTaskDao.getCocktailsWithNames(params);
+            Integer cocktailId = cocktailList.get(0).getId();
+            mAsyncTaskDao.deleteFavorite(cocktailId);
             return null;
         }
     }

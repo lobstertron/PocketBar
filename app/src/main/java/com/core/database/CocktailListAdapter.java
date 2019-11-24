@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.core.android.pocketbar.FavoritesActivity;
 import com.core.android.pocketbar.R;
 import com.core.android.pocketbar.RecipeActivity;
 
@@ -28,9 +29,16 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
     private List<Cocktail> mCocktails; //Initial master list of cocktails, filtering always filters this list
     private List<Cocktail> mCocktailsFiltered; //Filtered list of cocktails and the list actually backing the recyclerview
     private Context context;    // used to start RecipeActivity
+    private int layoutId; //Indicates which layout to use based on context
 
     public CocktailListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
+        //Determine layout based on the context, different contexts have different requirements
+        if (context instanceof FavoritesActivity) {
+            layoutId = R.layout.favorite_cocktail;
+        } else {
+            layoutId = R.layout.recyclerview_item;
+        }
         this.context = context;
     }
 
@@ -45,7 +53,7 @@ public class CocktailListAdapter extends RecyclerView.Adapter<CocktailListAdapte
 
     @Override
     public CocktailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        View itemView = mInflater.inflate(layoutId, parent, false);
         return new CocktailViewHolder(itemView);
     }
 

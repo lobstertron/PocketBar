@@ -35,6 +35,9 @@ public interface PocketBarDao {
     @Query("DELETE FROM shopping_ingredient where ingredient = :name")
     void deleteShoppingIngredient(String name);
 
+    @Query("DELETE FROM favorite where id = :id")
+    void deleteFavorite(Integer id);
+
     @Query("DELETE FROM ingredient")
     void deleteAllIngredients();
 
@@ -56,12 +59,21 @@ public interface PocketBarDao {
     @Query("SELECT * from ingredient WHERE name IN(:names)")
     List<Ingredient> getIngredientsWithNames(String[] names);
 
+    @Query("SELECT * from cocktail WHERE name IN(:names)")
+    List<Cocktail> getCocktailsWithNames(String[] names);
+
     //The following two inverse methods are used in the cocktail search
     @Query("SELECT cocktailId from cocktail_line WHERE ingredientId NOT IN(:ingredientIds) group by cocktailId")
     List<Integer> getCocktailLinesWithIngredientIdsInverse(int[] ingredientIds);
 
     @Query("SELECT * from cocktail WHERE id NOT IN(:cocktailIds)")
+    List<Cocktail> getCocktailsNotWithCocktailIds(Integer[] cocktailIds);
+
+    @Query("SELECT * from cocktail WHERE id IN(:cocktailIds)")
     List<Cocktail> getCocktailsWithCocktailIds(Integer[] cocktailIds);
+
+    @Query("SELECT id from favorite")
+    List<Integer> getAllFavoriteIds();
 
     @Query("SELECT * from bar_ingredient")
     List<BarIngredient> getAllBarIngredients();
