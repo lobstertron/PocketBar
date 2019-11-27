@@ -116,6 +116,9 @@ public interface PocketBarDao {
     @Query("SELECT * from shopping_ingredient where bar_name = 'main_bar' ORDER BY ingredient ASC")
     List<ShoppingIngredient> getShoppingIngredients();
 
+    @Query("SELECT ingredient from shopping_ingredient where bar_name = 'main_bar'")
+    List<String> getStringShoppingListIngredients();
+
 
 
 

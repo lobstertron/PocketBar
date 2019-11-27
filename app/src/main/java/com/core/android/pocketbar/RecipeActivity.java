@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.core.database.BarIngredient;
 import com.core.database.CocktailLine;
 import com.core.database.CocktailListAdapter;
 import com.core.database.PocketBarRepository;
+import com.core.database.ShoppingIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,10 @@ public class RecipeActivity extends AppCompatActivity {
         return cocktailId;
     }
 
+    public void addToShoppingList(View view) {
+        new addToShoppingListAsyncTask(mRepository).execute();
+    }
+
     /**
      * Runs the cocktail recipe generator asynchronously in a background thread, updating the contents of
      * the cocktail adapter once complete
@@ -88,6 +94,7 @@ public class RecipeActivity extends AppCompatActivity {
         private PocketBarRepository cocktailRepository;
         List<CocktailLine> cocktailLines;
         List<String> recipeIngredients;
+        List<String> shoppingIngredients;
 
         generateRecipeAsyncTask(PocketBarRepository cr) {
             cocktailRepository = cr;
@@ -97,6 +104,7 @@ public class RecipeActivity extends AppCompatActivity {
         protected List<String> doInBackground(Void... voids) {
             cocktailLines = cocktailRepository.generateCocktailLines(cocktailId);
             recipeIngredients = cocktailRepository.generateRecipeIngredients(cocktailLines);
+            shoppingIngredients = cocktailRepository.getStringShoppingListIngredients();
 
             return cocktailRepository.getStringMyBarIngredients();
         }
@@ -106,14 +114,26 @@ public class RecipeActivity extends AppCompatActivity {
          */
         protected void onPostExecute(List<String> barIngredients) {
 
+            recipeText.setText("");
+
             for(int i = 0; i < cocktailLines.size(); i++){
 
+                // if the ingredient is in MyBar, append green check-mark to beginning of ingredientLine
                 if(barIngredients.contains(recipeIngredients.get(i))){
                     String ingredientLine = " \u2713 " + cocktailLines.get(i).getAmount_literal() + " "
                             + recipeIngredients.get(i)+ "\n";
 
                     Spannable spannable = new SpannableString(ingredientLine);
                     spannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, 2,  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    recipeText.append(spannable);
+                // if the ingredient isn't in MyBar, append red X to beginning of ingredientLine
+                }else if(shoppingIngredients.contains(recipeIngredients.get(i))){
+                    String ingredientLine = " SL " + cocktailLines.get(i).getAmount_literal() + " "
+                            + recipeIngredients.get(i)+ "\n";
+
+                    Spannable spannable = new SpannableString(ingredientLine);
+                    spannable.setSpan(new ForegroundColorSpan(Color.rgb(240,86,25)), 0, 3,  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                     recipeText.append(spannable);
                 }else{
@@ -126,6 +146,48 @@ public class RecipeActivity extends AppCompatActivity {
                     recipeText.append(spannable);
                 }
             }
+        }
+    }
+
+    /**
+     * Adds ingredients from the recipe that aren't in MyBar to the shopping list
+     */
+    private class addToShoppingListAsyncTask extends AsyncTask<Void, Void, List<String>> {
+
+        private PocketBarRepository cocktailRepository;
+
+        addToShoppingListAsyncTask(PocketBarRepository cr) {
+            cocktailRepository = cr;
+        }
+
+        @Override
+        protected List<String> doInBackground(Void... voids) {
+            List<CocktailLine> cocktailLines = cocktailRepository.generateCocktailLines(cocktailId);
+            List<String> barIngredients = cocktailRepository.getStringMyBarIngredients();
+            List<String> shoppingIngredients = cocktailRepository.getStringShoppingListIngredients();
+            List<String>  recipeIngredients = cocktailRepository.generateRecipeIngredients(cocktailLines);
+
+            for(int i = 0; i < cocktailLines.size(); i++){
+
+                // if the ingredient isn't in MyBar, add it to the ShoppingList
+                if(!barIngredients.contains(recipeIngredients.get(i)) && !shoppingIngredients.contains(recipeIngredients.get(i))){
+
+                    cocktailRepository.insertShoppingIngredient(new ShoppingIngredient(recipeIngredients.get(i), "main_bar"));
+
+                }
+            }
+
+            return cocktailRepository.getStringShoppingListIngredients();
+
+        }
+
+        /**
+         *  re-generate the recipe page to update display
+         */
+        protected void onPostExecute(List<String> shoppingIngredients) {
+
+            new generateRecipeAsyncTask(mRepository).execute();
+
         }
     }
 }

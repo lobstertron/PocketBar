@@ -10,4 +10,5 @@
     <string name="shopping_list_title">Shopping List</string>
     <string name="bam_it_worked">BAM! IT WORKED!</string>
     <string name="title_activity_favorites">Favorites</string>
+    <string name="add_to_shopping_list">Add To Shopping List</string>
 </resources>

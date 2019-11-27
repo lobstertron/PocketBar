@@ -158,6 +158,7 @@ public class PocketBarRepository {
     public List<ShoppingIngredient> getShoppingIngredients() {
         return mPocketBarDao.getShoppingIngredients();
     }
+    public List<String> getStringShoppingListIngredients() { return mPocketBarDao.getStringShoppingListIngredients();}
 
     public void insertShoppingIngredient(ShoppingIngredient shoppingIngredient) {
         new PocketBarRepository.insertShoppingIngredientAsyncTask(mPocketBarDao).execute(shoppingIngredient);
