@@ -1,276 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/launch_search_view"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/pocketbar_orange"
-        android:onClick="launchSearchActivity"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/launch_search_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_recipe"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/pocketbar_orange"
-            android:text="Open Search"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toLeftOf="@id/launch_search_view"
-            app:layout_constraintTop_toTopOf="@id/launch_search_view" />
+            app:title="PocketBar"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <TextView
-            android:id="@+id/launch_search_description"
-            android:layout_width="301dp"
-            android:layout_height="36dp"
-            android:background="@color/pocketbar_orange"
-            android:text="Search cocktails by selecting ingredients, or by using MyBar ingredients."
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/search_image"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launch_search_text"
-            app:layout_constraintVertical_bias="0.0" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="#00201818"
+                android:paddingRight="15dp"
+                android:src="@drawable/ic_action_name" />
 
-        <ImageView
-            android:id="@+id/search_image"
-            android:layout_width="75sp"
-            android:layout_height="75sp"
-            android:background="@color/pocketbar_orange"
-            android:paddingTop="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/launch_search_view"
-            app:layout_constraintRight_toRightOf="@id/launch_search_view"
-            app:layout_constraintTop_toTopOf="@id/launch_search_view"
-            app:srcCompat="@android:drawable/ic_search_category_default"></ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/launch_bar_view"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/pocketbar_orange"
-        android:onClick="launchBarActivity"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_search_view">
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/launch_bar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Bar"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toLeftOf="@id/launch_bar_view"
-            app:layout_constraintTop_toTopOf="@id/launch_bar_view"/>
+    <include layout="@layout/content_main" />
 
-        <TextView
-            android:id="@+id/launch_bar_description"
-            android:layout_width="301dp"
-            android:layout_height="36dp"
-            android:background="@color/pocketbar_orange"
-            android:text="View and manage MyBar contents."
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/bar_image"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launch_bar_text"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/bar_image"
-            android:paddingTop="12dp"
-            android:layout_width="75sp"
-            android:layout_height="75sp"
-            app:layout_constraintBottom_toBottomOf="@id/launch_bar_view"
-            app:layout_constraintRight_toRightOf="@id/launch_bar_view"
-            app:layout_constraintTop_toTopOf="@id/launch_bar_view"
-            app:srcCompat="@drawable/ic_action_name"></ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/launch_shoppinglist_view"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/pocketbar_orange"
-        android:onClick="launchShoppingList"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_bar_view">
-
-        <TextView
-            android:id="@+id/launch_shoppinglist_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Shopping List"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toLeftOf="@id/launch_shoppinglist_view"
-            app:layout_constraintTop_toTopOf="@id/launch_shoppinglist_view"/>
-
-        <TextView
-            android:id="@+id/launch_shoppinglist_description"
-            android:layout_width="301dp"
-            android:layout_height="36dp"
-            android:background="@color/pocketbar_orange"
-            android:text="View and manage shopping list contents."
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/shoppinglist_image"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launch_shoppinglist_text"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/shoppinglist_image"
-            android:paddingTop="12dp"
-            android:layout_width="75sp"
-            android:layout_height="75sp"
-            app:layout_constraintBottom_toBottomOf="@id/launch_shoppinglist_view"
-            app:layout_constraintRight_toRightOf="@id/launch_shoppinglist_view"
-            app:layout_constraintTop_toTopOf="@id/launch_shoppinglist_view"
-            app:srcCompat="@android:drawable/ic_menu_add"></ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/launch_browse_view"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/pocketbar_orange"
-        android:onClick="launchBrowseActivity"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_shoppinglist_view">
-
-        <TextView
-            android:id="@+id/launch_browse_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Cocktail Browser"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toLeftOf="@id/launch_browse_view"
-            app:layout_constraintTop_toTopOf="@id/launch_browse_view"/>
-
-        <TextView
-            android:id="@+id/launch_browse_description"
-            android:layout_width="301dp"
-            android:layout_height="36dp"
-            android:background="@color/pocketbar_orange"
-            android:text="Browse cocktails via name instead of ingredients. Can also select a random cocktail!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/browse_image"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launch_browse_text"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/browse_image"
-            android:paddingTop="12dp"
-            android:layout_width="75sp"
-            android:layout_height="75sp"
-            app:layout_constraintBottom_toBottomOf="@id/launch_browse_view"
-            app:layout_constraintRight_toRightOf="@id/launch_browse_view"
-            app:layout_constraintTop_toTopOf="@id/launch_browse_view"
-            app:srcCompat="@android:drawable/ic_menu_view"></ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/launch_favorites_view"
-        android:layout_width="match_parent"
-        android:layout_height="100sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@color/pocketbar_orange"
-        android:onClick="launchFavoritesActivity"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_browse_view">
-
-        <TextView
-            android:id="@+id/launch_favorites_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Open Favorites"
-            android:textSize="25sp"
-            app:layout_constraintLeft_toLeftOf="@id/launch_favorites_view"
-            app:layout_constraintTop_toTopOf="@id/launch_favorites_view"/>
-
-        <TextView
-            android:id="@+id/launch_favorites_description"
-            android:layout_width="301dp"
-            android:layout_height="36dp"
-            android:background="@color/pocketbar_orange"
-            android:text="Browse cocktails that you've added to your favorites list!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/favorites_image"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/launch_favorites_text"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/favorites_image"
-            android:paddingTop="12dp"
-            android:layout_width="75sp"
-            android:layout_height="75sp"
-            app:layout_constraintBottom_toBottomOf="@id/launch_favorites_view"
-            app:layout_constraintRight_toRightOf="@id/launch_favorites_view"
-            app:layout_constraintTop_toTopOf="@id/launch_favorites_view"
-            app:srcCompat="@android:drawable/btn_star_big_on"></ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--    <Button-->
-    <!--        android:id="@+id/launch_shoppinglist_button"i-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="32dp"-->
-    <!--        android:text="Open Shopping List"-->
-    <!--        android:onClick="launchShoppingList"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/launch_bar_button" />-->
-    />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
