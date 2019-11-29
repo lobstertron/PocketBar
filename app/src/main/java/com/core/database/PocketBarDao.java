@@ -29,6 +29,9 @@ public interface PocketBarDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(BarIngredient barIngredient);
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insert(Favorite favorite);
+
     @Query("DELETE FROM bar_ingredient where ingredient = :name")
     void deleteBarIngredient(String name);
 

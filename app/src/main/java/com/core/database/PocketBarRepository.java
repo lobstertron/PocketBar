@@ -146,9 +146,25 @@ public class PocketBarRepository {
         return ingredients;
     }
 
+    public void insertFavorite(int favoriteId) {
+        Favorite favorite = new Favorite(favoriteId);
+        new PocketBarRepository.insertFavoriteAsyncTask(mPocketBarDao).execute(favorite);
+    }
 
+    private static class insertFavoriteAsyncTask extends AsyncTask<Favorite, Void, Void> {
 
+        private PocketBarDao mAsyncTaskDao;
 
+        insertFavoriteAsyncTask(PocketBarDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Favorite... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
 
 
 

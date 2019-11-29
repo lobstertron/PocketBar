@@ -85,6 +85,10 @@ public class RecipeActivity extends AppCompatActivity {
         new addToShoppingListAsyncTask(mRepository).execute();
     }
 
+    public void addToFavorites(View view) {
+        new addFavoriteAsyncTask(mRepository).execute();
+    }
+
     /**
      * Runs the cocktail recipe generator asynchronously in a background thread, updating the contents of
      * the cocktail adapter once complete
@@ -187,6 +191,26 @@ public class RecipeActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> shoppingIngredients) {
 
             new generateRecipeAsyncTask(mRepository).execute();
+
+        }
+    }
+
+    /**
+     * Adds ingredients from the recipe that aren't in MyBar to the shopping list
+     */
+    private class addFavoriteAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private PocketBarRepository cocktailRepository;
+
+        addFavoriteAsyncTask(PocketBarRepository cr) {
+            cocktailRepository = cr;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            cocktailRepository.insertFavorite(cocktailId);
+            return null;
 
         }
     }
